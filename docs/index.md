@@ -5270,6 +5270,170 @@ display(cancer_rate_preprocessed_categorical_summary.sort_values(by=['ChiSquare.
 
 ### 1.6.1 Premodelling Data Description <a class="anchor" id="1.6.1"></a>
 
+
+```python
+##################################
+# Filtering certain numeric columns
+# and encoded categorical columns
+# after hypothesis testing
+##################################
+cancer_rate_premodelling = cancer_rate_preprocessed_combined.drop(['URBPOP', 'POPGRO', 'LIFEXP', 'TUBINC', 'DTHCMD', 'AGRLND', 'GHGEMI','FORARE', 'CO2EMI', 'POPDEN'], axis=1)
+cancer_rate_premodelling.columns
+```
+
+
+
+
+    Index(['GDPCAP', 'EPISCO', 'CANRAT'], dtype='object')
+
+
+
+
+```python
+##################################
+# Performing a general exploration of the filtered dataset
+##################################
+print('Dataset Dimensions: ')
+display(cancer_rate_premodelling.shape)
+```
+
+    Dataset Dimensions: 
+    
+
+
+    (163, 3)
+
+
+
+```python
+##################################
+# Listing the column names and data types
+##################################
+print('Column Names and Data Types:')
+display(cancer_rate_premodelling.dtypes)
+```
+
+    Column Names and Data Types:
+    
+
+
+    GDPCAP     float64
+    EPISCO     float64
+    CANRAT    category
+    dtype: object
+
+
+
+```python
+##################################
+# Taking a snapshot of the dataset
+##################################
+cancer_rate_premodelling.head()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>GDPCAP</th>
+      <th>EPISCO</th>
+      <th>CANRAT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.549766</td>
+      <td>1.306738</td>
+      <td>High</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.407752</td>
+      <td>1.102912</td>
+      <td>High</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.879374</td>
+      <td>1.145832</td>
+      <td>High</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.685426</td>
+      <td>0.739753</td>
+      <td>High</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.657777</td>
+      <td>2.218327</td>
+      <td>High</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+##################################
+# Converting the dataframe to
+# a numpy array
+##################################
+cancer_rate_premodelling_matrix = cancer_rate_premodelling.to_numpy()
+```
+
+
+```python
+##################################
+# Formulating the scatterplot
+# of the selected numeric predictors
+# by categorical response classes
+##################################
+fig, ax = plt.subplots(figsize=(7, 7))
+ax.plot(cancer_rate_premodelling_matrix[cancer_rate_premodelling_matrix[:,2]=='High', 0],
+        cancer_rate_premodelling_matrix[cancer_rate_premodelling_matrix[:,2]=='High', 1], 
+        'o', 
+        label='High', 
+        color='darkslateblue')
+ax.plot(cancer_rate_premodelling_matrix[cancer_rate_premodelling_matrix[:,2]=='Low', 0],
+        cancer_rate_premodelling_matrix[cancer_rate_premodelling_matrix[:,2]=='Low', 1], 
+        'x', 
+        label='Low', 
+        color='chocolate')
+ax.axes.set_ylabel('EPISCO')
+ax.axes.set_xlabel('GDPCAP')
+ax.set_xlim(-3,3)
+ax.set_ylim(-3,3)
+ax.legend(loc='upper left',title='CANRAT');
+```
+
+
+    
+![png](output_166_0.png)
+    
+
+
 ### 1.6.2 Backpropagation with Very High Learning Rate and Low Epoch Count <a class="anchor" id="1.6.2"></a>
 
 ### 1.6.3 Backpropagation with Very High Learning Rate and High Epoch Count <a class="anchor" id="1.6.3"></a>
