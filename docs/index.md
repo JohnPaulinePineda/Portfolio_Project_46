@@ -2,7 +2,7 @@
 # Supervised Learning : Implementing Backpropagation In Updating Weights for Neural Network Classification
 
 ***
-### John Pauline Pineda <br> <br> *February 25, 2024*
+### John Pauline Pineda <br> <br> *February 28, 2024*
 ***
 
 * [**1. Table of Contents**](#TOC)
@@ -5425,6 +5425,7 @@ ax.axes.set_ylabel('EPISCO')
 ax.axes.set_xlabel('GDPCAP')
 ax.set_xlim(-3,3)
 ax.set_ylim(-3,3)
+ax.set(title='CANRAT Class Distribution')
 ax.legend(loc='upper left',title='CANRAT');
 ```
 
@@ -5434,17 +5435,687 @@ ax.legend(loc='upper left',title='CANRAT');
     
 
 
+
+```python
+##################################
+# Formulating the individual
+# neural network components
+##################################
+matrix_x_values = cancer_rate_premodelling.iloc[:,0:2].to_numpy()
+matrix_x_bias = np.ones((cancer_rate_premodelling.shape[0],1))
+matrix_x_complete = np.concatenate((matrix_x_values,matrix_x_bias), axis=1)
+y = np.where(cancer_rate_premodelling['CANRAT'] == 'High', 1, 0)
+observation_count = cancer_rate_premodelling.shape[0]
+num_obs = observation_count
+x_mat_full = matrix_x_complete
+```
+
+
+```python
+##################################
+# Defining a function for
+# the sigmoid activation
+##################################
+def sigmoid(x):
+    return 1.0 / (1.0 + np.exp(-x))
+```
+
+
+```python
+##################################
+# Defining a function for
+# computing the logarithmic loss 
+##################################
+def loss_fn(y_true, y_pred, eps=1e-16):
+    y_pred = np.maximum(y_pred,eps)
+    y_pred = np.minimum(y_pred,(1-eps))
+    return -(np.sum(y_true * np.log(y_pred)) + np.sum((1-y_true)*np.log(1-y_pred)))/len(y_true)
+```
+
+
+```python
+##################################
+# Defining a function for
+# performing the forward pass of the neural network 
+# by taking the matrix input,
+# producing the predicted output and
+# computing the gradient of the logarithmic loss 
+##################################
+def forward_pass(W1, W2):
+    global x_mat
+    global y
+    global num_obs
+    # Computing the predictions
+    z_2 = np.dot(x_mat, W_1)
+    a_2 = sigmoid(z_2)
+    z_3 = np.dot(a_2, W_2)
+    y_pred = sigmoid(z_3).reshape((len(x_mat),))
+    # Computing the gradient
+    J_z_3_grad = -y + y_pred
+    J_W_2_grad = np.dot(J_z_3_grad, a_2)
+    a_2_z_2_grad = sigmoid(z_2)*(1-sigmoid(z_2))
+    J_W_1_grad = (np.dot((J_z_3_grad).reshape(-1,1), W_2.reshape(-1,1).T)*a_2_z_2_grad).T.dot(x_mat).T
+    gradient = (J_W_1_grad, J_W_2_grad)
+    return y_pred, gradient
+```
+
+
+```python
+##################################
+# Defining a function for
+# plotting the logarithmic loss
+# and accuracy plots
+##################################
+def plot_loss_accuracy(loss_vals, accuracies):
+    fig = plt.figure(figsize=(16, 7))
+    fig.suptitle('Log Loss and Accuracy Over Iterations')
+    ax = fig.add_subplot(1, 2, 1)
+    ax.plot(loss_vals)
+    ax.grid(True)
+    ax.set(xlabel='Iterations', title='Logarithmic Loss')
+    ax.set_xlim(0,50)
+    ax.set_ylim(0,1.0)
+    ax = fig.add_subplot(1, 2, 2)
+    ax.plot(accuracies)
+    ax.set_xlim(0,50)
+    ax.set_ylim(0,1.0)
+    ax.grid(True)
+    ax.set(xlabel='Iterations', title='Accuracy');
+```
+
 ### 1.6.2 Backpropagation with Very High Learning Rate and Low Epoch Count <a class="anchor" id="1.6.2"></a>
+
+
+```python
+##################################
+# Defining the neural network parameters
+##################################
+np.random.seed(123456789)
+W_1 = np.random.uniform(-1,1,size=(3,4))
+W_2 = np.random.uniform(-1,1,size=(4))
+num_iter = 10
+learning_rate = 0.100
+x_mat = x_mat_full
+```
+
+
+```python
+##################################
+# Implementing the forward pass
+# of the neural network
+##################################
+loss_vals, accuracies = [], []
+for i in range(num_iter):
+    # Performing the forward pass process and gradient computation
+    y_pred, (J_W_1_grad, J_W_2_grad) = forward_pass(W_1, W_2)
+    # Updating the weight matrices
+    W_1 = W_1 - learning_rate*J_W_1_grad 
+    W_2 = W_2 - learning_rate*J_W_2_grad
+    # Computing the logarithmic loss and accuracy
+    curr_loss = loss_fn(y,y_pred)
+    loss_vals.append(curr_loss)
+    acc = np.sum((y_pred>=.5) == y)/num_obs
+    accuracies.append(acc)
+    # Printing the logarithmic loss and accuracy for every iteration
+    if((i%1) == 0):
+        print('Iteration {}, Logarithmic Loss = {:.4f}, Accuracy = {}'.format(
+            i, curr_loss, acc
+        ))
+plot_loss_accuracy(loss_vals, accuracies)
+```
+
+    Iteration 0, Logarithmic Loss = 0.6617, Accuracy = 0.7484662576687117
+    Iteration 1, Logarithmic Loss = 0.4524, Accuracy = 0.7484662576687117
+    Iteration 2, Logarithmic Loss = 0.3193, Accuracy = 0.7852760736196319
+    Iteration 3, Logarithmic Loss = 0.3151, Accuracy = 0.8650306748466258
+    Iteration 4, Logarithmic Loss = 0.2769, Accuracy = 0.8834355828220859
+    Iteration 5, Logarithmic Loss = 0.2158, Accuracy = 0.8834355828220859
+    Iteration 6, Logarithmic Loss = 0.2035, Accuracy = 0.9325153374233128
+    Iteration 7, Logarithmic Loss = 0.1994, Accuracy = 0.9263803680981595
+    Iteration 8, Logarithmic Loss = 0.1976, Accuracy = 0.9263803680981595
+    Iteration 9, Logarithmic Loss = 0.1966, Accuracy = 0.9325153374233128
+    
+
+
+    
+![png](output_174_1.png)
+    
+
+
+
+```python
+##################################
+# Plotting the predicted and
+# ground truth classes
+##################################
+pred1 = (y_pred>=.5)
+pred0 = (y_pred<.5)
+
+fig, ax = plt.subplots(figsize=(7, 7))
+# Determining the true predictions
+ax.plot(x_mat[pred1 & (y==1),0],x_mat[pred1 & (y==1),1], 'ro', label='True Positives')
+ax.plot(x_mat[pred0 & (y==0),0],x_mat[pred0 & (y==0),1], 'bx', label='True Negatives')
+# Determining the false predictions
+ax.plot(x_mat[pred1 & (y==0),0],x_mat[pred1 & (y==0),1], 'yx', label='False Positives', markersize=15)
+ax.plot(x_mat[pred0 & (y==1),0],x_mat[pred0 & (y==1),1], 'yo', label='False Negatives', markersize=15, alpha=.6)
+ax.axes.set_ylabel('EPISCO')
+ax.axes.set_xlabel('GDPCAP')
+ax.set(title='CANRAT Class Distribution')
+ax.set_xlim(-3,3)
+ax.set_ylim(-3,3)
+ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
+```
+
+
+    
+![png](output_175_0.png)
+    
+
 
 ### 1.6.3 Backpropagation with Very High Learning Rate and High Epoch Count <a class="anchor" id="1.6.3"></a>
 
+
+```python
+##################################
+# Defining the neural network parameters
+##################################
+np.random.seed(123456789)
+W_1 = np.random.uniform(-1,1,size=(3,4))
+W_2 = np.random.uniform(-1,1,size=(4))
+num_iter = 30
+learning_rate = 0.100
+x_mat = x_mat_full
+```
+
+
+```python
+##################################
+# Implementing the forward pass
+# of the neural network
+##################################
+loss_vals, accuracies = [], []
+for i in range(num_iter):
+    # Performing the forward pass process and gradient computation
+    y_pred, (J_W_1_grad, J_W_2_grad) = forward_pass(W_1, W_2)
+    # Updating the weight matrices
+    W_1 = W_1 - learning_rate*J_W_1_grad 
+    W_2 = W_2 - learning_rate*J_W_2_grad
+    # Computing the logarithmic loss and accuracy
+    curr_loss = loss_fn(y,y_pred)
+    loss_vals.append(curr_loss)
+    acc = np.sum((y_pred>=.5) == y)/num_obs
+    accuracies.append(acc)
+    # Printing the logarithmic loss and accuracy for every iteration
+    if((i%1) == 0):
+        print('Iteration {}, Logarithmic Loss = {:.4f}, Accuracy = {}'.format(
+            i, curr_loss, acc
+        ))
+plot_loss_accuracy(loss_vals, accuracies)
+```
+
+    Iteration 0, Logarithmic Loss = 0.6617, Accuracy = 0.7484662576687117
+    Iteration 1, Logarithmic Loss = 0.4524, Accuracy = 0.7484662576687117
+    Iteration 2, Logarithmic Loss = 0.3193, Accuracy = 0.7852760736196319
+    Iteration 3, Logarithmic Loss = 0.3151, Accuracy = 0.8650306748466258
+    Iteration 4, Logarithmic Loss = 0.2769, Accuracy = 0.8834355828220859
+    Iteration 5, Logarithmic Loss = 0.2158, Accuracy = 0.8834355828220859
+    Iteration 6, Logarithmic Loss = 0.2035, Accuracy = 0.9325153374233128
+    Iteration 7, Logarithmic Loss = 0.1994, Accuracy = 0.9263803680981595
+    Iteration 8, Logarithmic Loss = 0.1976, Accuracy = 0.9263803680981595
+    Iteration 9, Logarithmic Loss = 0.1966, Accuracy = 0.9325153374233128
+    Iteration 10, Logarithmic Loss = 0.1958, Accuracy = 0.9263803680981595
+    Iteration 11, Logarithmic Loss = 0.1952, Accuracy = 0.9263803680981595
+    Iteration 12, Logarithmic Loss = 0.1947, Accuracy = 0.9263803680981595
+    Iteration 13, Logarithmic Loss = 0.1943, Accuracy = 0.9263803680981595
+    Iteration 14, Logarithmic Loss = 0.1938, Accuracy = 0.9263803680981595
+    Iteration 15, Logarithmic Loss = 0.1934, Accuracy = 0.9263803680981595
+    Iteration 16, Logarithmic Loss = 0.1931, Accuracy = 0.9263803680981595
+    Iteration 17, Logarithmic Loss = 0.1927, Accuracy = 0.9263803680981595
+    Iteration 18, Logarithmic Loss = 0.1923, Accuracy = 0.9263803680981595
+    Iteration 19, Logarithmic Loss = 0.1920, Accuracy = 0.9263803680981595
+    Iteration 20, Logarithmic Loss = 0.1916, Accuracy = 0.9263803680981595
+    Iteration 21, Logarithmic Loss = 0.1913, Accuracy = 0.9263803680981595
+    Iteration 22, Logarithmic Loss = 0.1910, Accuracy = 0.9263803680981595
+    Iteration 23, Logarithmic Loss = 0.1907, Accuracy = 0.9263803680981595
+    Iteration 24, Logarithmic Loss = 0.1904, Accuracy = 0.9263803680981595
+    Iteration 25, Logarithmic Loss = 0.1901, Accuracy = 0.9263803680981595
+    Iteration 26, Logarithmic Loss = 0.1899, Accuracy = 0.9263803680981595
+    Iteration 27, Logarithmic Loss = 0.1897, Accuracy = 0.9263803680981595
+    Iteration 28, Logarithmic Loss = 0.1895, Accuracy = 0.9263803680981595
+    Iteration 29, Logarithmic Loss = 0.1893, Accuracy = 0.9263803680981595
+    
+
+
+    
+![png](output_178_1.png)
+    
+
+
+
+```python
+##################################
+# Plotting the predicted and
+# ground truth classes
+##################################
+pred1 = (y_pred>=.5)
+pred0 = (y_pred<.5)
+
+fig, ax = plt.subplots(figsize=(7, 7))
+# Determining the true predictions
+ax.plot(x_mat[pred1 & (y==1),0],x_mat[pred1 & (y==1),1], 'ro', label='True Positives')
+ax.plot(x_mat[pred0 & (y==0),0],x_mat[pred0 & (y==0),1], 'bx', label='True Negatives')
+# Determining the false predictions
+ax.plot(x_mat[pred1 & (y==0),0],x_mat[pred1 & (y==0),1], 'yx', label='False Positives', markersize=15)
+ax.plot(x_mat[pred0 & (y==1),0],x_mat[pred0 & (y==1),1], 'yo', label='False Negatives', markersize=15, alpha=.6)
+ax.axes.set_ylabel('EPISCO')
+ax.axes.set_xlabel('GDPCAP')
+ax.set(title='CANRAT Class Distribution')
+ax.set_xlim(-3,3)
+ax.set_ylim(-3,3)
+ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
+```
+
+
+    
+![png](output_179_0.png)
+    
+
+
 ### 1.6.4 Backpropagation with High Learning Rate and Low Epoch Count <a class="anchor" id="1.6.4"></a>
+
+
+```python
+##################################
+# Defining the neural network parameters
+##################################
+np.random.seed(123456789)
+W_1 = np.random.uniform(-1,1,size=(3,4))
+W_2 = np.random.uniform(-1,1,size=(4))
+num_iter = 10
+learning_rate = 0.010
+x_mat = x_mat_full
+```
+
+
+```python
+##################################
+# Implementing the forward pass
+# of the neural network
+##################################
+loss_vals, accuracies = [], []
+for i in range(num_iter):
+    # Performing the forward pass process and gradient computation
+    y_pred, (J_W_1_grad, J_W_2_grad) = forward_pass(W_1, W_2)
+    # Updating the weight matrices
+    W_1 = W_1 - learning_rate*J_W_1_grad 
+    W_2 = W_2 - learning_rate*J_W_2_grad
+    # Computing the logarithmic loss and accuracy
+    curr_loss = loss_fn(y,y_pred)
+    loss_vals.append(curr_loss)
+    acc = np.sum((y_pred>=.5) == y)/num_obs
+    accuracies.append(acc)
+    # Printing the logarithmic loss and accuracy for every iteration
+    if((i%1) == 0):
+        print('Iteration {}, Logarithmic Loss = {:.4f}, Accuracy = {}'.format(
+            i, curr_loss, acc
+        ))
+plot_loss_accuracy(loss_vals, accuracies)
+```
+
+    Iteration 0, Logarithmic Loss = 0.6617, Accuracy = 0.7484662576687117
+    Iteration 1, Logarithmic Loss = 0.6160, Accuracy = 0.7484662576687117
+    Iteration 2, Logarithmic Loss = 0.5786, Accuracy = 0.7484662576687117
+    Iteration 3, Logarithmic Loss = 0.5462, Accuracy = 0.7484662576687117
+    Iteration 4, Logarithmic Loss = 0.5165, Accuracy = 0.7484662576687117
+    Iteration 5, Logarithmic Loss = 0.4887, Accuracy = 0.7484662576687117
+    Iteration 6, Logarithmic Loss = 0.4623, Accuracy = 0.7484662576687117
+    Iteration 7, Logarithmic Loss = 0.4373, Accuracy = 0.7484662576687117
+    Iteration 8, Logarithmic Loss = 0.4140, Accuracy = 0.7484662576687117
+    Iteration 9, Logarithmic Loss = 0.3925, Accuracy = 0.754601226993865
+    
+
+
+    
+![png](output_182_1.png)
+    
+
+
+
+```python
+##################################
+# Plotting the predicted and
+# ground truth classes
+##################################
+pred1 = (y_pred>=.5)
+pred0 = (y_pred<.5)
+
+fig, ax = plt.subplots(figsize=(7, 7))
+# Determining the true predictions
+ax.plot(x_mat[pred1 & (y==1),0],x_mat[pred1 & (y==1),1], 'ro', label='True Positives')
+ax.plot(x_mat[pred0 & (y==0),0],x_mat[pred0 & (y==0),1], 'bx', label='True Negatives')
+# Determining the false predictions
+ax.plot(x_mat[pred1 & (y==0),0],x_mat[pred1 & (y==0),1], 'yx', label='False Positives', markersize=15)
+ax.plot(x_mat[pred0 & (y==1),0],x_mat[pred0 & (y==1),1], 'yo', label='False Negatives', markersize=15, alpha=.6)
+ax.axes.set_ylabel('EPISCO')
+ax.axes.set_xlabel('GDPCAP')
+ax.set(title='CANRAT Class Distribution')
+ax.set_xlim(-3,3)
+ax.set_ylim(-3,3)
+ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
+```
+
+
+    
+![png](output_183_0.png)
+    
+
 
 ### 1.6.5 Backpropagation with High Learning Rate and High Epoch Count <a class="anchor" id="1.6.5"></a>
 
+
+```python
+##################################
+# Defining the neural network parameters
+##################################
+np.random.seed(123456789)
+W_1 = np.random.uniform(-1,1,size=(3,4))
+W_2 = np.random.uniform(-1,1,size=(4))
+num_iter = 30
+learning_rate = 0.010
+x_mat = x_mat_full
+```
+
+
+```python
+##################################
+# Implementing the forward pass
+# of the neural network
+##################################
+loss_vals, accuracies = [], []
+for i in range(num_iter):
+    # Performing the forward pass process and gradient computation
+    y_pred, (J_W_1_grad, J_W_2_grad) = forward_pass(W_1, W_2)
+    # Updating the weight matrices
+    W_1 = W_1 - learning_rate*J_W_1_grad 
+    W_2 = W_2 - learning_rate*J_W_2_grad
+    # Computing the logarithmic loss and accuracy
+    curr_loss = loss_fn(y,y_pred)
+    loss_vals.append(curr_loss)
+    acc = np.sum((y_pred>=.5) == y)/num_obs
+    accuracies.append(acc)
+    # Printing the logarithmic loss and accuracy for every iteration
+    if((i%1) == 0):
+        print('Iteration {}, Logarithmic Loss = {:.4f}, Accuracy = {}'.format(
+            i, curr_loss, acc
+        ))
+plot_loss_accuracy(loss_vals, accuracies)
+```
+
+    Iteration 0, Logarithmic Loss = 0.6617, Accuracy = 0.7484662576687117
+    Iteration 1, Logarithmic Loss = 0.6160, Accuracy = 0.7484662576687117
+    Iteration 2, Logarithmic Loss = 0.5786, Accuracy = 0.7484662576687117
+    Iteration 3, Logarithmic Loss = 0.5462, Accuracy = 0.7484662576687117
+    Iteration 4, Logarithmic Loss = 0.5165, Accuracy = 0.7484662576687117
+    Iteration 5, Logarithmic Loss = 0.4887, Accuracy = 0.7484662576687117
+    Iteration 6, Logarithmic Loss = 0.4623, Accuracy = 0.7484662576687117
+    Iteration 7, Logarithmic Loss = 0.4373, Accuracy = 0.7484662576687117
+    Iteration 8, Logarithmic Loss = 0.4140, Accuracy = 0.7484662576687117
+    Iteration 9, Logarithmic Loss = 0.3925, Accuracy = 0.754601226993865
+    Iteration 10, Logarithmic Loss = 0.3729, Accuracy = 0.7791411042944786
+    Iteration 11, Logarithmic Loss = 0.3551, Accuracy = 0.8220858895705522
+    Iteration 12, Logarithmic Loss = 0.3392, Accuracy = 0.8466257668711656
+    Iteration 13, Logarithmic Loss = 0.3251, Accuracy = 0.8711656441717791
+    Iteration 14, Logarithmic Loss = 0.3125, Accuracy = 0.8834355828220859
+    Iteration 15, Logarithmic Loss = 0.3014, Accuracy = 0.8957055214723927
+    Iteration 16, Logarithmic Loss = 0.2916, Accuracy = 0.8957055214723927
+    Iteration 17, Logarithmic Loss = 0.2828, Accuracy = 0.9079754601226994
+    Iteration 18, Logarithmic Loss = 0.2751, Accuracy = 0.9079754601226994
+    Iteration 19, Logarithmic Loss = 0.2682, Accuracy = 0.9079754601226994
+    Iteration 20, Logarithmic Loss = 0.2620, Accuracy = 0.9141104294478528
+    Iteration 21, Logarithmic Loss = 0.2565, Accuracy = 0.9263803680981595
+    Iteration 22, Logarithmic Loss = 0.2516, Accuracy = 0.9263803680981595
+    Iteration 23, Logarithmic Loss = 0.2472, Accuracy = 0.9263803680981595
+    Iteration 24, Logarithmic Loss = 0.2432, Accuracy = 0.9263803680981595
+    Iteration 25, Logarithmic Loss = 0.2395, Accuracy = 0.9263803680981595
+    Iteration 26, Logarithmic Loss = 0.2362, Accuracy = 0.9263803680981595
+    Iteration 27, Logarithmic Loss = 0.2332, Accuracy = 0.9263803680981595
+    Iteration 28, Logarithmic Loss = 0.2305, Accuracy = 0.9263803680981595
+    Iteration 29, Logarithmic Loss = 0.2280, Accuracy = 0.9263803680981595
+    
+
+
+    
+![png](output_186_1.png)
+    
+
+
+
+```python
+##################################
+# Plotting the predicted and
+# ground truth classes
+##################################
+pred1 = (y_pred>=.5)
+pred0 = (y_pred<.5)
+
+fig, ax = plt.subplots(figsize=(7, 7))
+# Determining the true predictions
+ax.plot(x_mat[pred1 & (y==1),0],x_mat[pred1 & (y==1),1], 'ro', label='True Positives')
+ax.plot(x_mat[pred0 & (y==0),0],x_mat[pred0 & (y==0),1], 'bx', label='True Negatives')
+# Determining the false predictions
+ax.plot(x_mat[pred1 & (y==0),0],x_mat[pred1 & (y==0),1], 'yx', label='False Positives', markersize=15)
+ax.plot(x_mat[pred0 & (y==1),0],x_mat[pred0 & (y==1),1], 'yo', label='False Negatives', markersize=15, alpha=.6)
+ax.axes.set_ylabel('EPISCO')
+ax.axes.set_xlabel('GDPCAP')
+ax.set(title='CANRAT Class Distribution')
+ax.set_xlim(-3,3)
+ax.set_ylim(-3,3)
+ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
+```
+
+
+    
+![png](output_187_0.png)
+    
+
+
 ### 1.6.6 Backpropagation with Low Learning Rate and Low Epoch Count <a class="anchor" id="1.6.6"></a>
 
+
+```python
+##################################
+# Defining the neural network parameters
+##################################
+np.random.seed(123456789)
+W_1 = np.random.uniform(-1,1,size=(3,4))
+W_2 = np.random.uniform(-1,1,size=(4))
+num_iter = 10
+learning_rate = 0.001
+x_mat = x_mat_full
+```
+
+
+```python
+##################################
+# Implementing the forward pass
+# of the neural network
+##################################
+loss_vals, accuracies = [], []
+for i in range(num_iter):
+    # Performing the forward pass process and gradient computation
+    y_pred, (J_W_1_grad, J_W_2_grad) = forward_pass(W_1, W_2)
+    # Updating the weight matrices
+    W_1 = W_1 - learning_rate*J_W_1_grad 
+    W_2 = W_2 - learning_rate*J_W_2_grad
+    # Computing the logarithmic loss and accuracy
+    curr_loss = loss_fn(y,y_pred)
+    loss_vals.append(curr_loss)
+    acc = np.sum((y_pred>=.5) == y)/num_obs
+    accuracies.append(acc)
+    # Printing the logarithmic loss and accuracy for every iteration
+    if((i%1) == 0):
+        print('Iteration {}, Logarithmic Loss = {:.4f}, Accuracy = {}'.format(
+            i, curr_loss, acc
+        ))
+plot_loss_accuracy(loss_vals, accuracies)
+```
+
+    Iteration 0, Logarithmic Loss = 0.6617, Accuracy = 0.7484662576687117
+    Iteration 1, Logarithmic Loss = 0.6569, Accuracy = 0.7484662576687117
+    Iteration 2, Logarithmic Loss = 0.6521, Accuracy = 0.7484662576687117
+    Iteration 3, Logarithmic Loss = 0.6475, Accuracy = 0.7484662576687117
+    Iteration 4, Logarithmic Loss = 0.6430, Accuracy = 0.7484662576687117
+    Iteration 5, Logarithmic Loss = 0.6386, Accuracy = 0.7484662576687117
+    Iteration 6, Logarithmic Loss = 0.6342, Accuracy = 0.7484662576687117
+    Iteration 7, Logarithmic Loss = 0.6299, Accuracy = 0.7484662576687117
+    Iteration 8, Logarithmic Loss = 0.6258, Accuracy = 0.7484662576687117
+    Iteration 9, Logarithmic Loss = 0.6216, Accuracy = 0.7484662576687117
+    
+
+
+    
+![png](output_190_1.png)
+    
+
+
+
+```python
+##################################
+# Plotting the predicted and
+# ground truth classes
+##################################
+pred1 = (y_pred>=.5)
+pred0 = (y_pred<.5)
+
+fig, ax = plt.subplots(figsize=(7, 7))
+# Determining the true predictions
+ax.plot(x_mat[pred1 & (y==1),0],x_mat[pred1 & (y==1),1], 'ro', label='True Positives')
+ax.plot(x_mat[pred0 & (y==0),0],x_mat[pred0 & (y==0),1], 'bx', label='True Negatives')
+# Determining the false predictions
+ax.plot(x_mat[pred1 & (y==0),0],x_mat[pred1 & (y==0),1], 'yx', label='False Positives', markersize=15)
+ax.plot(x_mat[pred0 & (y==1),0],x_mat[pred0 & (y==1),1], 'yo', label='False Negatives', markersize=15, alpha=.6)
+ax.axes.set_ylabel('EPISCO')
+ax.axes.set_xlabel('GDPCAP')
+ax.set(title='CANRAT Class Distribution')
+ax.set_xlim(-3,3)
+ax.set_ylim(-3,3)
+ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
+```
+
+
+    
+![png](output_191_0.png)
+    
+
+
 ### 1.6.7 Backpropagation with Low Learning Rate and High Epoch Count <a class="anchor" id="1.6.7"></a>
+
+
+```python
+##################################
+# Defining the neural network parameters
+##################################
+np.random.seed(123456789)
+W_1 = np.random.uniform(-1,1,size=(3,4))
+W_2 = np.random.uniform(-1,1,size=(4))
+num_iter = 30
+learning_rate = 0.001
+x_mat = x_mat_full
+```
+
+
+```python
+##################################
+# Implementing the forward pass
+# of the neural network
+##################################
+loss_vals, accuracies = [], []
+for i in range(num_iter):
+    # Performing the forward pass process and gradient computation
+    y_pred, (J_W_1_grad, J_W_2_grad) = forward_pass(W_1, W_2)
+    # Updating the weight matrices
+    W_1 = W_1 - learning_rate*J_W_1_grad 
+    W_2 = W_2 - learning_rate*J_W_2_grad
+    # Computing the logarithmic loss and accuracy
+    curr_loss = loss_fn(y,y_pred)
+    loss_vals.append(curr_loss)
+    acc = np.sum((y_pred>=.5) == y)/num_obs
+    accuracies.append(acc)
+    # Printing the logarithmic loss and accuracy for every iteration
+    if((i%1) == 0):
+        print('Iteration {}, Logarithmic Loss = {:.4f}, Accuracy = {}'.format(
+            i, curr_loss, acc
+        ))
+plot_loss_accuracy(loss_vals, accuracies)
+```
+
+    Iteration 0, Logarithmic Loss = 0.6617, Accuracy = 0.7484662576687117
+    Iteration 1, Logarithmic Loss = 0.6569, Accuracy = 0.7484662576687117
+    Iteration 2, Logarithmic Loss = 0.6521, Accuracy = 0.7484662576687117
+    Iteration 3, Logarithmic Loss = 0.6475, Accuracy = 0.7484662576687117
+    Iteration 4, Logarithmic Loss = 0.6430, Accuracy = 0.7484662576687117
+    Iteration 5, Logarithmic Loss = 0.6386, Accuracy = 0.7484662576687117
+    Iteration 6, Logarithmic Loss = 0.6342, Accuracy = 0.7484662576687117
+    Iteration 7, Logarithmic Loss = 0.6299, Accuracy = 0.7484662576687117
+    Iteration 8, Logarithmic Loss = 0.6258, Accuracy = 0.7484662576687117
+    Iteration 9, Logarithmic Loss = 0.6216, Accuracy = 0.7484662576687117
+    Iteration 10, Logarithmic Loss = 0.6176, Accuracy = 0.7484662576687117
+    Iteration 11, Logarithmic Loss = 0.6136, Accuracy = 0.7484662576687117
+    Iteration 12, Logarithmic Loss = 0.6097, Accuracy = 0.7484662576687117
+    Iteration 13, Logarithmic Loss = 0.6058, Accuracy = 0.7484662576687117
+    Iteration 14, Logarithmic Loss = 0.6020, Accuracy = 0.7484662576687117
+    Iteration 15, Logarithmic Loss = 0.5983, Accuracy = 0.7484662576687117
+    Iteration 16, Logarithmic Loss = 0.5946, Accuracy = 0.7484662576687117
+    Iteration 17, Logarithmic Loss = 0.5909, Accuracy = 0.7484662576687117
+    Iteration 18, Logarithmic Loss = 0.5873, Accuracy = 0.7484662576687117
+    Iteration 19, Logarithmic Loss = 0.5837, Accuracy = 0.7484662576687117
+    Iteration 20, Logarithmic Loss = 0.5802, Accuracy = 0.7484662576687117
+    Iteration 21, Logarithmic Loss = 0.5767, Accuracy = 0.7484662576687117
+    Iteration 22, Logarithmic Loss = 0.5733, Accuracy = 0.7484662576687117
+    Iteration 23, Logarithmic Loss = 0.5699, Accuracy = 0.7484662576687117
+    Iteration 24, Logarithmic Loss = 0.5665, Accuracy = 0.7484662576687117
+    Iteration 25, Logarithmic Loss = 0.5631, Accuracy = 0.7484662576687117
+    Iteration 26, Logarithmic Loss = 0.5598, Accuracy = 0.7484662576687117
+    Iteration 27, Logarithmic Loss = 0.5565, Accuracy = 0.7484662576687117
+    Iteration 28, Logarithmic Loss = 0.5533, Accuracy = 0.7484662576687117
+    Iteration 29, Logarithmic Loss = 0.5500, Accuracy = 0.7484662576687117
+    
+
+
+    
+![png](output_194_1.png)
+    
+
+
+
+```python
+##################################
+# Plotting the predicted and
+# ground truth classes
+##################################
+pred1 = (y_pred>=.5)
+pred0 = (y_pred<.5)
+
+fig, ax = plt.subplots(figsize=(7, 7))
+# Determining the true predictions
+ax.plot(x_mat[pred1 & (y==1),0],x_mat[pred1 & (y==1),1], 'ro', label='True Positives')
+ax.plot(x_mat[pred0 & (y==0),0],x_mat[pred0 & (y==0),1], 'bx', label='True Negatives')
+# Determining the false predictions
+ax.plot(x_mat[pred1 & (y==0),0],x_mat[pred1 & (y==0),1], 'yx', label='False Positives', markersize=15)
+ax.plot(x_mat[pred0 & (y==1),0],x_mat[pred0 & (y==1),1], 'yo', label='False Negatives', markersize=15, alpha=.6)
+ax.axes.set_ylabel('EPISCO')
+ax.axes.set_xlabel('GDPCAP')
+ax.set(title='CANRAT Class Distribution')
+ax.set_xlim(-3,3)
+ax.set_ylim(-3,3)
+ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
+```
+
+
+    
+![png](output_195_0.png)
+    
+
 
 # 2. Summary <a class="anchor" id="Summary"></a>
 
