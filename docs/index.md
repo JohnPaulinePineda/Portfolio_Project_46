@@ -5525,6 +5525,19 @@ def plot_loss_accuracy(loss_vals, accuracies):
 
 ### 1.6.2 Backpropagation with Very High Learning Rate and Low Epoch Count <a class="anchor" id="1.6.2"></a>
 
+[Backpropagation](https://link.springer.com/book/10.1007/978-0-387-84858-7) and [Weight Update](https://link.springer.com/book/10.1007/978-0-387-84858-7), in the context of an artificial neural network, involve the process of iteratively adjusting the weights of the connections between neurons in the network to minimize the difference between the predicted and the actual target responses. Input data is fed into the neural network, and it propagates through the network layer by layer, starting from the input layer, through hidden layers, and ending at the output layer. At each neuron, the weighted sum of inputs is calculated, followed by the application of an activation function to produce the neuron's output. Once the forward pass is complete, the network's output is compared to the actual target output. The difference between the predicted output and the actual output is quantified using a loss function, which measures the discrepancy between the predicted and actual values. Common loss functions for classification tasks include cross-entropy loss. During the backward pass, the error is propagated backward through the network to compute the gradients of the loss function with respect to each weight in the network. This is achieved using the chain rule of calculus, which allows the error to be decomposed and distributed backward through the network. The gradients quantify how much a change in each weight would affect the overall error of the network. Once the gradients are computed, the weights are updated in the opposite direction of the gradient to minimize the error. This update is typically performed using an optimization algorithm such as gradient descent, which adjusts the weights in proportion to their gradients and a learning rate hyperparameter. The learning rate determines the size of the step taken in the direction opposite to the gradient. These steps are repeated for multiple iterations (epochs) over the training data. As the training progresses, the weights are adjusted iteratively to minimize the error, leading to a neural network model that accurately classifies input data.
+
+1. A neural network with the following structure was formulated:
+    * <span style="color: #FF0000">Hidden Layer</span> = 1
+    * <span style="color: #FF0000">Number of Nodes</span> = 4
+2. The backpropagation and gradient descent algorithms were implemented with parameter settings described as follows:
+    * <span style="color: #FF0000">Learning Rate</span> = 0.100 (Very High)
+    * <span style="color: #FF0000">Epochs</span> = 100 (Low)
+3. The final squared loss estimate determined as 0.1853 at the 100th epoch was not optimally low as compared to those obtained using the other parameter settings.
+4. Applying the backpropagation and gradient descent algorithms with a very high learning rate and low epoch count, the neural network model performance is estimated as follows:
+    * <span style="color: #FF0000">Accuracy</span> = 93.2515
+5. The estimated classification accuracy using the backpropagation and gradient descent algorithms with a very high learning rate and low epoch count was optimal as compared to those obtained using the other parameter settings, despite some glitches during the epoch training.
+
 
 ```python
 ##################################
@@ -5613,6 +5626,19 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 
 ### 1.6.3 Backpropagation with Very High Learning Rate and High Epoch Count <a class="anchor" id="1.6.3"></a>
+
+[Backpropagation](https://link.springer.com/book/10.1007/978-0-387-84858-7) and [Weight Update](https://link.springer.com/book/10.1007/978-0-387-84858-7), in the context of an artificial neural network, involve the process of iteratively adjusting the weights of the connections between neurons in the network to minimize the difference between the predicted and the actual target responses. Input data is fed into the neural network, and it propagates through the network layer by layer, starting from the input layer, through hidden layers, and ending at the output layer. At each neuron, the weighted sum of inputs is calculated, followed by the application of an activation function to produce the neuron's output. Once the forward pass is complete, the network's output is compared to the actual target output. The difference between the predicted output and the actual output is quantified using a loss function, which measures the discrepancy between the predicted and actual values. Common loss functions for classification tasks include cross-entropy loss. During the backward pass, the error is propagated backward through the network to compute the gradients of the loss function with respect to each weight in the network. This is achieved using the chain rule of calculus, which allows the error to be decomposed and distributed backward through the network. The gradients quantify how much a change in each weight would affect the overall error of the network. Once the gradients are computed, the weights are updated in the opposite direction of the gradient to minimize the error. This update is typically performed using an optimization algorithm such as gradient descent, which adjusts the weights in proportion to their gradients and a learning rate hyperparameter. The learning rate determines the size of the step taken in the direction opposite to the gradient. These steps are repeated for multiple iterations (epochs) over the training data. As the training progresses, the weights are adjusted iteratively to minimize the error, leading to a neural network model that accurately classifies input data.
+
+1. A neural network with the following structure was formulated:
+    * <span style="color: #FF0000">Hidden Layer</span> = 1
+    * <span style="color: #FF0000">Number of Nodes</span> = 4
+2. The backpropagation and gradient descent algorithms were implemented with parameter settings described as follows:
+    * <span style="color: #FF0000">Learning Rate</span> = 0.100 (Very High)
+    * <span style="color: #FF0000">Epochs</span> = 500 (High)
+3. The final squared loss estimate determined as 0.1648 at the 500th epoch was not optimally low as compared to those obtained using the other parameter settings.
+4. Applying the backpropagation and gradient descent algorithms with a very high learning rate and high epoch count, the neural network model performance is estimated as follows:
+    * <span style="color: #FF0000">Accuracy</span> = 92.0245
+5. The estimated classification accuracy using the backpropagation and gradient descent algorithms with a very high learning rate and high epoch count was not optimal as compared to those obtained using the other parameter settings.
 
 
 ```python
@@ -5743,6 +5769,19 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 ### 1.6.4 Backpropagation with High Learning Rate and Low Epoch Count <a class="anchor" id="1.6.4"></a>
 
+[Backpropagation](https://link.springer.com/book/10.1007/978-0-387-84858-7) and [Weight Update](https://link.springer.com/book/10.1007/978-0-387-84858-7), in the context of an artificial neural network, involve the process of iteratively adjusting the weights of the connections between neurons in the network to minimize the difference between the predicted and the actual target responses. Input data is fed into the neural network, and it propagates through the network layer by layer, starting from the input layer, through hidden layers, and ending at the output layer. At each neuron, the weighted sum of inputs is calculated, followed by the application of an activation function to produce the neuron's output. Once the forward pass is complete, the network's output is compared to the actual target output. The difference between the predicted output and the actual output is quantified using a loss function, which measures the discrepancy between the predicted and actual values. Common loss functions for classification tasks include cross-entropy loss. During the backward pass, the error is propagated backward through the network to compute the gradients of the loss function with respect to each weight in the network. This is achieved using the chain rule of calculus, which allows the error to be decomposed and distributed backward through the network. The gradients quantify how much a change in each weight would affect the overall error of the network. Once the gradients are computed, the weights are updated in the opposite direction of the gradient to minimize the error. This update is typically performed using an optimization algorithm such as gradient descent, which adjusts the weights in proportion to their gradients and a learning rate hyperparameter. The learning rate determines the size of the step taken in the direction opposite to the gradient. These steps are repeated for multiple iterations (epochs) over the training data. As the training progresses, the weights are adjusted iteratively to minimize the error, leading to a neural network model that accurately classifies input data.
+
+1. A neural network with the following structure was formulated:
+    * <span style="color: #FF0000">Hidden Layer</span> = 1
+    * <span style="color: #FF0000">Number of Nodes</span> = 4
+2. The backpropagation and gradient descent algorithms were implemented with parameter settings described as follows:
+    * <span style="color: #FF0000">Learning Rate</span> = 0.010 (High)
+    * <span style="color: #FF0000">Epochs</span> = 100 (Low)
+3. The final squared loss estimate determined as 0.1938 at the 100th epoch was not optimally low as compared to those obtained using the other parameter settings.
+4. Applying the backpropagation and gradient descent algorithms with a high learning rate and low epoch count, the neural network model performance is estimated as follows:
+    * <span style="color: #FF0000">Accuracy</span> = 92.6380
+5. The estimated classification accuracy using the backpropagation and gradient descent algorithms with a high learning rate and low epoch count was not optimal as compared to those obtained using the other parameter settings.
+
 
 ```python
 ##################################
@@ -5831,6 +5870,19 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 
 ### 1.6.5 Backpropagation with High Learning Rate and High Epoch Count <a class="anchor" id="1.6.5"></a>
+
+[Backpropagation](https://link.springer.com/book/10.1007/978-0-387-84858-7) and [Weight Update](https://link.springer.com/book/10.1007/978-0-387-84858-7), in the context of an artificial neural network, involve the process of iteratively adjusting the weights of the connections between neurons in the network to minimize the difference between the predicted and the actual target responses. Input data is fed into the neural network, and it propagates through the network layer by layer, starting from the input layer, through hidden layers, and ending at the output layer. At each neuron, the weighted sum of inputs is calculated, followed by the application of an activation function to produce the neuron's output. Once the forward pass is complete, the network's output is compared to the actual target output. The difference between the predicted output and the actual output is quantified using a loss function, which measures the discrepancy between the predicted and actual values. Common loss functions for classification tasks include cross-entropy loss. During the backward pass, the error is propagated backward through the network to compute the gradients of the loss function with respect to each weight in the network. This is achieved using the chain rule of calculus, which allows the error to be decomposed and distributed backward through the network. The gradients quantify how much a change in each weight would affect the overall error of the network. Once the gradients are computed, the weights are updated in the opposite direction of the gradient to minimize the error. This update is typically performed using an optimization algorithm such as gradient descent, which adjusts the weights in proportion to their gradients and a learning rate hyperparameter. The learning rate determines the size of the step taken in the direction opposite to the gradient. These steps are repeated for multiple iterations (epochs) over the training data. As the training progresses, the weights are adjusted iteratively to minimize the error, leading to a neural network model that accurately classifies input data.
+
+1. A neural network with the following structure was formulated:
+    * <span style="color: #FF0000">Hidden Layer</span> = 1
+    * <span style="color: #FF0000">Number of Nodes</span> = 4
+2. The backpropagation and gradient descent algorithms were implemented with parameter settings described as follows:
+    * <span style="color: #FF0000">Learning Rate</span> = 0.010 (High)
+    * <span style="color: #FF0000">Epochs</span> = 500 (High)
+3. The final squared loss estimate determined as 0.1867 at the 500th epoch was not optimally low as compared to those obtained using the other parameter settings.
+4. Applying the backpropagation and gradient descent algorithms with a high learning rate and high epoch count, the neural network model performance is estimated as follows:
+    * <span style="color: #FF0000">Accuracy</span> = 92.6380
+5. The estimated classification accuracy using the backpropagation and gradient descent algorithms with a high learning rate and high epoch count was not optimal as compared to those obtained using the other parameter settings.
 
 
 ```python
@@ -5961,6 +6013,19 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 ### 1.6.6 Backpropagation with Low Learning Rate and Low Epoch Count <a class="anchor" id="1.6.6"></a>
 
+[Backpropagation](https://link.springer.com/book/10.1007/978-0-387-84858-7) and [Weight Update](https://link.springer.com/book/10.1007/978-0-387-84858-7), in the context of an artificial neural network, involve the process of iteratively adjusting the weights of the connections between neurons in the network to minimize the difference between the predicted and the actual target responses. Input data is fed into the neural network, and it propagates through the network layer by layer, starting from the input layer, through hidden layers, and ending at the output layer. At each neuron, the weighted sum of inputs is calculated, followed by the application of an activation function to produce the neuron's output. Once the forward pass is complete, the network's output is compared to the actual target output. The difference between the predicted output and the actual output is quantified using a loss function, which measures the discrepancy between the predicted and actual values. Common loss functions for classification tasks include cross-entropy loss. During the backward pass, the error is propagated backward through the network to compute the gradients of the loss function with respect to each weight in the network. This is achieved using the chain rule of calculus, which allows the error to be decomposed and distributed backward through the network. The gradients quantify how much a change in each weight would affect the overall error of the network. Once the gradients are computed, the weights are updated in the opposite direction of the gradient to minimize the error. This update is typically performed using an optimization algorithm such as gradient descent, which adjusts the weights in proportion to their gradients and a learning rate hyperparameter. The learning rate determines the size of the step taken in the direction opposite to the gradient. These steps are repeated for multiple iterations (epochs) over the training data. As the training progresses, the weights are adjusted iteratively to minimize the error, leading to a neural network model that accurately classifies input data.
+
+1. A neural network with the following structure was formulated:
+    * <span style="color: #FF0000">Hidden Layer</span> = 1
+    * <span style="color: #FF0000">Number of Nodes</span> = 4
+2. The backpropagation and gradient descent algorithms were implemented with parameter settings described as follows:
+    * <span style="color: #FF0000">Learning Rate</span> = 0.001 (Low)
+    * <span style="color: #FF0000">Epochs</span> = 100 (Low)
+3. The final squared loss estimate determined as 0.3881 at the 100th epoch was not optimally low as compared to those obtained using the other parameter settings.
+4. Applying the backpropagation and gradient descent algorithms with a low learning rate and low epoch count, the neural network model performance is estimated as follows:
+    * <span style="color: #FF0000">Accuracy</span> = 75.4601
+5. The estimated classification accuracy using the backpropagation and gradient descent algorithms with a low learning rate and low epoch count was not optimal as compared to those obtained using the other parameter settings.
+
 
 ```python
 ##################################
@@ -6049,6 +6114,19 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 
 ### 1.6.7 Backpropagation with Low Learning Rate and High Epoch Count <a class="anchor" id="1.6.7"></a>
+
+[Backpropagation](https://link.springer.com/book/10.1007/978-0-387-84858-7) and [Weight Update](https://link.springer.com/book/10.1007/978-0-387-84858-7), in the context of an artificial neural network, involve the process of iteratively adjusting the weights of the connections between neurons in the network to minimize the difference between the predicted and the actual target responses. Input data is fed into the neural network, and it propagates through the network layer by layer, starting from the input layer, through hidden layers, and ending at the output layer. At each neuron, the weighted sum of inputs is calculated, followed by the application of an activation function to produce the neuron's output. Once the forward pass is complete, the network's output is compared to the actual target output. The difference between the predicted output and the actual output is quantified using a loss function, which measures the discrepancy between the predicted and actual values. Common loss functions for classification tasks include cross-entropy loss. During the backward pass, the error is propagated backward through the network to compute the gradients of the loss function with respect to each weight in the network. This is achieved using the chain rule of calculus, which allows the error to be decomposed and distributed backward through the network. The gradients quantify how much a change in each weight would affect the overall error of the network. Once the gradients are computed, the weights are updated in the opposite direction of the gradient to minimize the error. This update is typically performed using an optimization algorithm such as gradient descent, which adjusts the weights in proportion to their gradients and a learning rate hyperparameter. The learning rate determines the size of the step taken in the direction opposite to the gradient. These steps are repeated for multiple iterations (epochs) over the training data. As the training progresses, the weights are adjusted iteratively to minimize the error, leading to a neural network model that accurately classifies input data.
+
+1. A neural network with the following structure was formulated:
+    * <span style="color: #FF0000">Hidden Layer</span> = 1
+    * <span style="color: #FF0000">Number of Nodes</span> = 4
+2. The backpropagation and gradient descent algorithms were implemented with parameter settings described as follows:
+    * <span style="color: #FF0000">Learning Rate</span> = 0.001 (Low)
+    * <span style="color: #FF0000">Epochs</span> = 500 (High)
+3. The final squared loss estimate determined as 0.2033 at the 500th epoch was not optimally low as compared to those obtained using the other parameter settings.
+4. Applying the backpropagation and gradient descent algorithms with a low learning rate and low epoch count, the neural network model performance is estimated as follows:
+    * <span style="color: #FF0000">Accuracy</span> = 93.2515
+5. The estimated classification accuracy using the backpropagation and gradient descent algorithms with a low learning rate and high epoch count was optimal as compared to those obtained using the other parameter settings, also demonstrating a consistently smooth profile during the epoch training.
 
 
 ```python
