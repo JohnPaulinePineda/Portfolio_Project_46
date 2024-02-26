@@ -5513,11 +5513,11 @@ def plot_loss_accuracy(loss_vals, accuracies):
     ax.plot(loss_vals)
     ax.grid(True)
     ax.set(xlabel='Iterations', title='Logarithmic Loss')
-    ax.set_xlim(0,50)
+    ax.set_xlim(0,500)
     ax.set_ylim(0,1.0)
     ax = fig.add_subplot(1, 2, 2)
     ax.plot(accuracies)
-    ax.set_xlim(0,50)
+    ax.set_xlim(0,500)
     ax.set_ylim(0,1.0)
     ax.grid(True)
     ax.set(xlabel='Iterations', title='Accuracy');
@@ -5533,7 +5533,7 @@ def plot_loss_accuracy(loss_vals, accuracies):
 np.random.seed(123456789)
 W_1 = np.random.uniform(-1,1,size=(3,4))
 W_2 = np.random.uniform(-1,1,size=(4))
-num_iter = 10
+num_iter = 100
 learning_rate = 0.100
 x_mat = x_mat_full
 ```
@@ -5556,8 +5556,8 @@ for i in range(num_iter):
     loss_vals.append(curr_loss)
     acc = np.sum((y_pred>=.5) == y)/num_obs
     accuracies.append(acc)
-    # Printing the logarithmic loss and accuracy for every iteration
-    if((i%1) == 0):
+    # Printing the logarithmic loss and accuracy for every 10th iteration
+    if((i%10) == 0):
         print('Iteration {}, Logarithmic Loss = {:.4f}, Accuracy = {}'.format(
             i, curr_loss, acc
         ))
@@ -5565,15 +5565,15 @@ plot_loss_accuracy(loss_vals, accuracies)
 ```
 
     Iteration 0, Logarithmic Loss = 0.6617, Accuracy = 0.7484662576687117
-    Iteration 1, Logarithmic Loss = 0.4524, Accuracy = 0.7484662576687117
-    Iteration 2, Logarithmic Loss = 0.3193, Accuracy = 0.7852760736196319
-    Iteration 3, Logarithmic Loss = 0.3151, Accuracy = 0.8650306748466258
-    Iteration 4, Logarithmic Loss = 0.2769, Accuracy = 0.8834355828220859
-    Iteration 5, Logarithmic Loss = 0.2158, Accuracy = 0.8834355828220859
-    Iteration 6, Logarithmic Loss = 0.2035, Accuracy = 0.9325153374233128
-    Iteration 7, Logarithmic Loss = 0.1994, Accuracy = 0.9263803680981595
-    Iteration 8, Logarithmic Loss = 0.1976, Accuracy = 0.9263803680981595
-    Iteration 9, Logarithmic Loss = 0.1966, Accuracy = 0.9325153374233128
+    Iteration 10, Logarithmic Loss = 0.1958, Accuracy = 0.9263803680981595
+    Iteration 20, Logarithmic Loss = 0.1916, Accuracy = 0.9263803680981595
+    Iteration 30, Logarithmic Loss = 0.1891, Accuracy = 0.9263803680981595
+    Iteration 40, Logarithmic Loss = 0.1896, Accuracy = 0.9325153374233128
+    Iteration 50, Logarithmic Loss = 0.1935, Accuracy = 0.9263803680981595
+    Iteration 60, Logarithmic Loss = 0.1888, Accuracy = 0.9263803680981595
+    Iteration 70, Logarithmic Loss = 0.1866, Accuracy = 0.9263803680981595
+    Iteration 80, Logarithmic Loss = 0.1851, Accuracy = 0.9263803680981595
+    Iteration 90, Logarithmic Loss = 0.1853, Accuracy = 0.9325153374233128
     
 
 
@@ -5622,7 +5622,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 np.random.seed(123456789)
 W_1 = np.random.uniform(-1,1,size=(3,4))
 W_2 = np.random.uniform(-1,1,size=(4))
-num_iter = 30
+num_iter = 500
 learning_rate = 0.100
 x_mat = x_mat_full
 ```
@@ -5645,8 +5645,8 @@ for i in range(num_iter):
     loss_vals.append(curr_loss)
     acc = np.sum((y_pred>=.5) == y)/num_obs
     accuracies.append(acc)
-    # Printing the logarithmic loss and accuracy for every iteration
-    if((i%1) == 0):
+    # Printing the logarithmic loss and accuracy for every 10th iteration
+    if((i%10) == 0):
         print('Iteration {}, Logarithmic Loss = {:.4f}, Accuracy = {}'.format(
             i, curr_loss, acc
         ))
@@ -5654,35 +5654,55 @@ plot_loss_accuracy(loss_vals, accuracies)
 ```
 
     Iteration 0, Logarithmic Loss = 0.6617, Accuracy = 0.7484662576687117
-    Iteration 1, Logarithmic Loss = 0.4524, Accuracy = 0.7484662576687117
-    Iteration 2, Logarithmic Loss = 0.3193, Accuracy = 0.7852760736196319
-    Iteration 3, Logarithmic Loss = 0.3151, Accuracy = 0.8650306748466258
-    Iteration 4, Logarithmic Loss = 0.2769, Accuracy = 0.8834355828220859
-    Iteration 5, Logarithmic Loss = 0.2158, Accuracy = 0.8834355828220859
-    Iteration 6, Logarithmic Loss = 0.2035, Accuracy = 0.9325153374233128
-    Iteration 7, Logarithmic Loss = 0.1994, Accuracy = 0.9263803680981595
-    Iteration 8, Logarithmic Loss = 0.1976, Accuracy = 0.9263803680981595
-    Iteration 9, Logarithmic Loss = 0.1966, Accuracy = 0.9325153374233128
     Iteration 10, Logarithmic Loss = 0.1958, Accuracy = 0.9263803680981595
-    Iteration 11, Logarithmic Loss = 0.1952, Accuracy = 0.9263803680981595
-    Iteration 12, Logarithmic Loss = 0.1947, Accuracy = 0.9263803680981595
-    Iteration 13, Logarithmic Loss = 0.1943, Accuracy = 0.9263803680981595
-    Iteration 14, Logarithmic Loss = 0.1938, Accuracy = 0.9263803680981595
-    Iteration 15, Logarithmic Loss = 0.1934, Accuracy = 0.9263803680981595
-    Iteration 16, Logarithmic Loss = 0.1931, Accuracy = 0.9263803680981595
-    Iteration 17, Logarithmic Loss = 0.1927, Accuracy = 0.9263803680981595
-    Iteration 18, Logarithmic Loss = 0.1923, Accuracy = 0.9263803680981595
-    Iteration 19, Logarithmic Loss = 0.1920, Accuracy = 0.9263803680981595
     Iteration 20, Logarithmic Loss = 0.1916, Accuracy = 0.9263803680981595
-    Iteration 21, Logarithmic Loss = 0.1913, Accuracy = 0.9263803680981595
-    Iteration 22, Logarithmic Loss = 0.1910, Accuracy = 0.9263803680981595
-    Iteration 23, Logarithmic Loss = 0.1907, Accuracy = 0.9263803680981595
-    Iteration 24, Logarithmic Loss = 0.1904, Accuracy = 0.9263803680981595
-    Iteration 25, Logarithmic Loss = 0.1901, Accuracy = 0.9263803680981595
-    Iteration 26, Logarithmic Loss = 0.1899, Accuracy = 0.9263803680981595
-    Iteration 27, Logarithmic Loss = 0.1897, Accuracy = 0.9263803680981595
-    Iteration 28, Logarithmic Loss = 0.1895, Accuracy = 0.9263803680981595
-    Iteration 29, Logarithmic Loss = 0.1893, Accuracy = 0.9263803680981595
+    Iteration 30, Logarithmic Loss = 0.1891, Accuracy = 0.9263803680981595
+    Iteration 40, Logarithmic Loss = 0.1896, Accuracy = 0.9325153374233128
+    Iteration 50, Logarithmic Loss = 0.1935, Accuracy = 0.9263803680981595
+    Iteration 60, Logarithmic Loss = 0.1888, Accuracy = 0.9263803680981595
+    Iteration 70, Logarithmic Loss = 0.1866, Accuracy = 0.9263803680981595
+    Iteration 80, Logarithmic Loss = 0.1851, Accuracy = 0.9263803680981595
+    Iteration 90, Logarithmic Loss = 0.1853, Accuracy = 0.9325153374233128
+    Iteration 100, Logarithmic Loss = 0.1877, Accuracy = 0.9263803680981595
+    Iteration 110, Logarithmic Loss = 0.1844, Accuracy = 0.9325153374233128
+    Iteration 120, Logarithmic Loss = 0.1829, Accuracy = 0.9325153374233128
+    Iteration 130, Logarithmic Loss = 0.1817, Accuracy = 0.9325153374233128
+    Iteration 140, Logarithmic Loss = 0.1808, Accuracy = 0.9325153374233128
+    Iteration 150, Logarithmic Loss = 0.1804, Accuracy = 0.9202453987730062
+    Iteration 160, Logarithmic Loss = 0.1834, Accuracy = 0.9263803680981595
+    Iteration 170, Logarithmic Loss = 0.1791, Accuracy = 0.9263803680981595
+    Iteration 180, Logarithmic Loss = 0.1783, Accuracy = 0.9202453987730062
+    Iteration 190, Logarithmic Loss = 0.1781, Accuracy = 0.9202453987730062
+    Iteration 200, Logarithmic Loss = 0.1788, Accuracy = 0.9263803680981595
+    Iteration 210, Logarithmic Loss = 0.1778, Accuracy = 0.9263803680981595
+    Iteration 220, Logarithmic Loss = 0.1764, Accuracy = 0.9202453987730062
+    Iteration 230, Logarithmic Loss = 0.1754, Accuracy = 0.9202453987730062
+    Iteration 240, Logarithmic Loss = 0.1747, Accuracy = 0.9202453987730062
+    Iteration 250, Logarithmic Loss = 0.1741, Accuracy = 0.9202453987730062
+    Iteration 260, Logarithmic Loss = 0.1735, Accuracy = 0.9202453987730062
+    Iteration 270, Logarithmic Loss = 0.1730, Accuracy = 0.9202453987730062
+    Iteration 280, Logarithmic Loss = 0.1725, Accuracy = 0.9202453987730062
+    Iteration 290, Logarithmic Loss = 0.1720, Accuracy = 0.9202453987730062
+    Iteration 300, Logarithmic Loss = 0.1716, Accuracy = 0.9202453987730062
+    Iteration 310, Logarithmic Loss = 0.1711, Accuracy = 0.9202453987730062
+    Iteration 320, Logarithmic Loss = 0.1707, Accuracy = 0.9202453987730062
+    Iteration 330, Logarithmic Loss = 0.1703, Accuracy = 0.9202453987730062
+    Iteration 340, Logarithmic Loss = 0.1699, Accuracy = 0.9202453987730062
+    Iteration 350, Logarithmic Loss = 0.1695, Accuracy = 0.9202453987730062
+    Iteration 360, Logarithmic Loss = 0.1691, Accuracy = 0.9202453987730062
+    Iteration 370, Logarithmic Loss = 0.1687, Accuracy = 0.9202453987730062
+    Iteration 380, Logarithmic Loss = 0.1684, Accuracy = 0.9202453987730062
+    Iteration 390, Logarithmic Loss = 0.1680, Accuracy = 0.9202453987730062
+    Iteration 400, Logarithmic Loss = 0.1676, Accuracy = 0.9202453987730062
+    Iteration 410, Logarithmic Loss = 0.1673, Accuracy = 0.9202453987730062
+    Iteration 420, Logarithmic Loss = 0.1669, Accuracy = 0.9202453987730062
+    Iteration 430, Logarithmic Loss = 0.1666, Accuracy = 0.9202453987730062
+    Iteration 440, Logarithmic Loss = 0.1663, Accuracy = 0.9202453987730062
+    Iteration 450, Logarithmic Loss = 0.1660, Accuracy = 0.9202453987730062
+    Iteration 460, Logarithmic Loss = 0.1657, Accuracy = 0.9202453987730062
+    Iteration 470, Logarithmic Loss = 0.1654, Accuracy = 0.9202453987730062
+    Iteration 480, Logarithmic Loss = 0.1651, Accuracy = 0.9202453987730062
+    Iteration 490, Logarithmic Loss = 0.1648, Accuracy = 0.9202453987730062
     
 
 
@@ -5731,7 +5751,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 np.random.seed(123456789)
 W_1 = np.random.uniform(-1,1,size=(3,4))
 W_2 = np.random.uniform(-1,1,size=(4))
-num_iter = 10
+num_iter = 100
 learning_rate = 0.010
 x_mat = x_mat_full
 ```
@@ -5754,8 +5774,8 @@ for i in range(num_iter):
     loss_vals.append(curr_loss)
     acc = np.sum((y_pred>=.5) == y)/num_obs
     accuracies.append(acc)
-    # Printing the logarithmic loss and accuracy for every iteration
-    if((i%1) == 0):
+    # Printing the logarithmic loss and accuracy for every 10th iteration
+    if((i%10) == 0):
         print('Iteration {}, Logarithmic Loss = {:.4f}, Accuracy = {}'.format(
             i, curr_loss, acc
         ))
@@ -5763,15 +5783,15 @@ plot_loss_accuracy(loss_vals, accuracies)
 ```
 
     Iteration 0, Logarithmic Loss = 0.6617, Accuracy = 0.7484662576687117
-    Iteration 1, Logarithmic Loss = 0.6160, Accuracy = 0.7484662576687117
-    Iteration 2, Logarithmic Loss = 0.5786, Accuracy = 0.7484662576687117
-    Iteration 3, Logarithmic Loss = 0.5462, Accuracy = 0.7484662576687117
-    Iteration 4, Logarithmic Loss = 0.5165, Accuracy = 0.7484662576687117
-    Iteration 5, Logarithmic Loss = 0.4887, Accuracy = 0.7484662576687117
-    Iteration 6, Logarithmic Loss = 0.4623, Accuracy = 0.7484662576687117
-    Iteration 7, Logarithmic Loss = 0.4373, Accuracy = 0.7484662576687117
-    Iteration 8, Logarithmic Loss = 0.4140, Accuracy = 0.7484662576687117
-    Iteration 9, Logarithmic Loss = 0.3925, Accuracy = 0.754601226993865
+    Iteration 10, Logarithmic Loss = 0.3729, Accuracy = 0.7791411042944786
+    Iteration 20, Logarithmic Loss = 0.2620, Accuracy = 0.9141104294478528
+    Iteration 30, Logarithmic Loss = 0.2257, Accuracy = 0.9325153374233128
+    Iteration 40, Logarithmic Loss = 0.2104, Accuracy = 0.9325153374233128
+    Iteration 50, Logarithmic Loss = 0.2028, Accuracy = 0.9325153374233128
+    Iteration 60, Logarithmic Loss = 0.1986, Accuracy = 0.9263803680981595
+    Iteration 70, Logarithmic Loss = 0.1962, Accuracy = 0.9263803680981595
+    Iteration 80, Logarithmic Loss = 0.1947, Accuracy = 0.9263803680981595
+    Iteration 90, Logarithmic Loss = 0.1938, Accuracy = 0.9263803680981595
     
 
 
@@ -5820,7 +5840,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 np.random.seed(123456789)
 W_1 = np.random.uniform(-1,1,size=(3,4))
 W_2 = np.random.uniform(-1,1,size=(4))
-num_iter = 30
+num_iter = 500
 learning_rate = 0.010
 x_mat = x_mat_full
 ```
@@ -5843,8 +5863,8 @@ for i in range(num_iter):
     loss_vals.append(curr_loss)
     acc = np.sum((y_pred>=.5) == y)/num_obs
     accuracies.append(acc)
-    # Printing the logarithmic loss and accuracy for every iteration
-    if((i%1) == 0):
+    # Printing the logarithmic loss and accuracy for every 10th iteration
+    if((i%10) == 0):
         print('Iteration {}, Logarithmic Loss = {:.4f}, Accuracy = {}'.format(
             i, curr_loss, acc
         ))
@@ -5852,35 +5872,55 @@ plot_loss_accuracy(loss_vals, accuracies)
 ```
 
     Iteration 0, Logarithmic Loss = 0.6617, Accuracy = 0.7484662576687117
-    Iteration 1, Logarithmic Loss = 0.6160, Accuracy = 0.7484662576687117
-    Iteration 2, Logarithmic Loss = 0.5786, Accuracy = 0.7484662576687117
-    Iteration 3, Logarithmic Loss = 0.5462, Accuracy = 0.7484662576687117
-    Iteration 4, Logarithmic Loss = 0.5165, Accuracy = 0.7484662576687117
-    Iteration 5, Logarithmic Loss = 0.4887, Accuracy = 0.7484662576687117
-    Iteration 6, Logarithmic Loss = 0.4623, Accuracy = 0.7484662576687117
-    Iteration 7, Logarithmic Loss = 0.4373, Accuracy = 0.7484662576687117
-    Iteration 8, Logarithmic Loss = 0.4140, Accuracy = 0.7484662576687117
-    Iteration 9, Logarithmic Loss = 0.3925, Accuracy = 0.754601226993865
     Iteration 10, Logarithmic Loss = 0.3729, Accuracy = 0.7791411042944786
-    Iteration 11, Logarithmic Loss = 0.3551, Accuracy = 0.8220858895705522
-    Iteration 12, Logarithmic Loss = 0.3392, Accuracy = 0.8466257668711656
-    Iteration 13, Logarithmic Loss = 0.3251, Accuracy = 0.8711656441717791
-    Iteration 14, Logarithmic Loss = 0.3125, Accuracy = 0.8834355828220859
-    Iteration 15, Logarithmic Loss = 0.3014, Accuracy = 0.8957055214723927
-    Iteration 16, Logarithmic Loss = 0.2916, Accuracy = 0.8957055214723927
-    Iteration 17, Logarithmic Loss = 0.2828, Accuracy = 0.9079754601226994
-    Iteration 18, Logarithmic Loss = 0.2751, Accuracy = 0.9079754601226994
-    Iteration 19, Logarithmic Loss = 0.2682, Accuracy = 0.9079754601226994
     Iteration 20, Logarithmic Loss = 0.2620, Accuracy = 0.9141104294478528
-    Iteration 21, Logarithmic Loss = 0.2565, Accuracy = 0.9263803680981595
-    Iteration 22, Logarithmic Loss = 0.2516, Accuracy = 0.9263803680981595
-    Iteration 23, Logarithmic Loss = 0.2472, Accuracy = 0.9263803680981595
-    Iteration 24, Logarithmic Loss = 0.2432, Accuracy = 0.9263803680981595
-    Iteration 25, Logarithmic Loss = 0.2395, Accuracy = 0.9263803680981595
-    Iteration 26, Logarithmic Loss = 0.2362, Accuracy = 0.9263803680981595
-    Iteration 27, Logarithmic Loss = 0.2332, Accuracy = 0.9263803680981595
-    Iteration 28, Logarithmic Loss = 0.2305, Accuracy = 0.9263803680981595
-    Iteration 29, Logarithmic Loss = 0.2280, Accuracy = 0.9263803680981595
+    Iteration 30, Logarithmic Loss = 0.2257, Accuracy = 0.9325153374233128
+    Iteration 40, Logarithmic Loss = 0.2104, Accuracy = 0.9325153374233128
+    Iteration 50, Logarithmic Loss = 0.2028, Accuracy = 0.9325153374233128
+    Iteration 60, Logarithmic Loss = 0.1986, Accuracy = 0.9263803680981595
+    Iteration 70, Logarithmic Loss = 0.1962, Accuracy = 0.9263803680981595
+    Iteration 80, Logarithmic Loss = 0.1947, Accuracy = 0.9263803680981595
+    Iteration 90, Logarithmic Loss = 0.1938, Accuracy = 0.9263803680981595
+    Iteration 100, Logarithmic Loss = 0.1931, Accuracy = 0.9263803680981595
+    Iteration 110, Logarithmic Loss = 0.1926, Accuracy = 0.9263803680981595
+    Iteration 120, Logarithmic Loss = 0.1922, Accuracy = 0.9263803680981595
+    Iteration 130, Logarithmic Loss = 0.1919, Accuracy = 0.9263803680981595
+    Iteration 140, Logarithmic Loss = 0.1916, Accuracy = 0.9263803680981595
+    Iteration 150, Logarithmic Loss = 0.1913, Accuracy = 0.9263803680981595
+    Iteration 160, Logarithmic Loss = 0.1911, Accuracy = 0.9263803680981595
+    Iteration 170, Logarithmic Loss = 0.1909, Accuracy = 0.9263803680981595
+    Iteration 180, Logarithmic Loss = 0.1907, Accuracy = 0.9263803680981595
+    Iteration 190, Logarithmic Loss = 0.1905, Accuracy = 0.9263803680981595
+    Iteration 200, Logarithmic Loss = 0.1903, Accuracy = 0.9263803680981595
+    Iteration 210, Logarithmic Loss = 0.1901, Accuracy = 0.9263803680981595
+    Iteration 220, Logarithmic Loss = 0.1899, Accuracy = 0.9263803680981595
+    Iteration 230, Logarithmic Loss = 0.1898, Accuracy = 0.9263803680981595
+    Iteration 240, Logarithmic Loss = 0.1896, Accuracy = 0.9263803680981595
+    Iteration 250, Logarithmic Loss = 0.1895, Accuracy = 0.9263803680981595
+    Iteration 260, Logarithmic Loss = 0.1893, Accuracy = 0.9263803680981595
+    Iteration 270, Logarithmic Loss = 0.1892, Accuracy = 0.9263803680981595
+    Iteration 280, Logarithmic Loss = 0.1890, Accuracy = 0.9263803680981595
+    Iteration 290, Logarithmic Loss = 0.1889, Accuracy = 0.9263803680981595
+    Iteration 300, Logarithmic Loss = 0.1888, Accuracy = 0.9263803680981595
+    Iteration 310, Logarithmic Loss = 0.1887, Accuracy = 0.9263803680981595
+    Iteration 320, Logarithmic Loss = 0.1885, Accuracy = 0.9263803680981595
+    Iteration 330, Logarithmic Loss = 0.1884, Accuracy = 0.9263803680981595
+    Iteration 340, Logarithmic Loss = 0.1883, Accuracy = 0.9263803680981595
+    Iteration 350, Logarithmic Loss = 0.1882, Accuracy = 0.9263803680981595
+    Iteration 360, Logarithmic Loss = 0.1881, Accuracy = 0.9263803680981595
+    Iteration 370, Logarithmic Loss = 0.1880, Accuracy = 0.9263803680981595
+    Iteration 380, Logarithmic Loss = 0.1879, Accuracy = 0.9263803680981595
+    Iteration 390, Logarithmic Loss = 0.1878, Accuracy = 0.9263803680981595
+    Iteration 400, Logarithmic Loss = 0.1877, Accuracy = 0.9263803680981595
+    Iteration 410, Logarithmic Loss = 0.1876, Accuracy = 0.9263803680981595
+    Iteration 420, Logarithmic Loss = 0.1875, Accuracy = 0.9263803680981595
+    Iteration 430, Logarithmic Loss = 0.1873, Accuracy = 0.9263803680981595
+    Iteration 440, Logarithmic Loss = 0.1872, Accuracy = 0.9263803680981595
+    Iteration 450, Logarithmic Loss = 0.1871, Accuracy = 0.9263803680981595
+    Iteration 460, Logarithmic Loss = 0.1870, Accuracy = 0.9263803680981595
+    Iteration 470, Logarithmic Loss = 0.1869, Accuracy = 0.9263803680981595
+    Iteration 480, Logarithmic Loss = 0.1868, Accuracy = 0.9263803680981595
+    Iteration 490, Logarithmic Loss = 0.1867, Accuracy = 0.9263803680981595
     
 
 
@@ -5929,7 +5969,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 np.random.seed(123456789)
 W_1 = np.random.uniform(-1,1,size=(3,4))
 W_2 = np.random.uniform(-1,1,size=(4))
-num_iter = 10
+num_iter = 100
 learning_rate = 0.001
 x_mat = x_mat_full
 ```
@@ -5952,8 +5992,8 @@ for i in range(num_iter):
     loss_vals.append(curr_loss)
     acc = np.sum((y_pred>=.5) == y)/num_obs
     accuracies.append(acc)
-    # Printing the logarithmic loss and accuracy for every iteration
-    if((i%1) == 0):
+    # Printing the logarithmic loss and accuracy for every 10th iteration
+    if((i%10) == 0):
         print('Iteration {}, Logarithmic Loss = {:.4f}, Accuracy = {}'.format(
             i, curr_loss, acc
         ))
@@ -5961,15 +6001,15 @@ plot_loss_accuracy(loss_vals, accuracies)
 ```
 
     Iteration 0, Logarithmic Loss = 0.6617, Accuracy = 0.7484662576687117
-    Iteration 1, Logarithmic Loss = 0.6569, Accuracy = 0.7484662576687117
-    Iteration 2, Logarithmic Loss = 0.6521, Accuracy = 0.7484662576687117
-    Iteration 3, Logarithmic Loss = 0.6475, Accuracy = 0.7484662576687117
-    Iteration 4, Logarithmic Loss = 0.6430, Accuracy = 0.7484662576687117
-    Iteration 5, Logarithmic Loss = 0.6386, Accuracy = 0.7484662576687117
-    Iteration 6, Logarithmic Loss = 0.6342, Accuracy = 0.7484662576687117
-    Iteration 7, Logarithmic Loss = 0.6299, Accuracy = 0.7484662576687117
-    Iteration 8, Logarithmic Loss = 0.6258, Accuracy = 0.7484662576687117
-    Iteration 9, Logarithmic Loss = 0.6216, Accuracy = 0.7484662576687117
+    Iteration 10, Logarithmic Loss = 0.6176, Accuracy = 0.7484662576687117
+    Iteration 20, Logarithmic Loss = 0.5802, Accuracy = 0.7484662576687117
+    Iteration 30, Logarithmic Loss = 0.5468, Accuracy = 0.7484662576687117
+    Iteration 40, Logarithmic Loss = 0.5159, Accuracy = 0.7484662576687117
+    Iteration 50, Logarithmic Loss = 0.4868, Accuracy = 0.7484662576687117
+    Iteration 60, Logarithmic Loss = 0.4594, Accuracy = 0.7484662576687117
+    Iteration 70, Logarithmic Loss = 0.4336, Accuracy = 0.7484662576687117
+    Iteration 80, Logarithmic Loss = 0.4099, Accuracy = 0.7484662576687117
+    Iteration 90, Logarithmic Loss = 0.3881, Accuracy = 0.754601226993865
     
 
 
@@ -6018,7 +6058,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 np.random.seed(123456789)
 W_1 = np.random.uniform(-1,1,size=(3,4))
 W_2 = np.random.uniform(-1,1,size=(4))
-num_iter = 30
+num_iter = 500
 learning_rate = 0.001
 x_mat = x_mat_full
 ```
@@ -6041,8 +6081,8 @@ for i in range(num_iter):
     loss_vals.append(curr_loss)
     acc = np.sum((y_pred>=.5) == y)/num_obs
     accuracies.append(acc)
-    # Printing the logarithmic loss and accuracy for every iteration
-    if((i%1) == 0):
+    # Printing the logarithmic loss and accuracy for every 10th iteration
+    if((i%10) == 0):
         print('Iteration {}, Logarithmic Loss = {:.4f}, Accuracy = {}'.format(
             i, curr_loss, acc
         ))
@@ -6050,35 +6090,55 @@ plot_loss_accuracy(loss_vals, accuracies)
 ```
 
     Iteration 0, Logarithmic Loss = 0.6617, Accuracy = 0.7484662576687117
-    Iteration 1, Logarithmic Loss = 0.6569, Accuracy = 0.7484662576687117
-    Iteration 2, Logarithmic Loss = 0.6521, Accuracy = 0.7484662576687117
-    Iteration 3, Logarithmic Loss = 0.6475, Accuracy = 0.7484662576687117
-    Iteration 4, Logarithmic Loss = 0.6430, Accuracy = 0.7484662576687117
-    Iteration 5, Logarithmic Loss = 0.6386, Accuracy = 0.7484662576687117
-    Iteration 6, Logarithmic Loss = 0.6342, Accuracy = 0.7484662576687117
-    Iteration 7, Logarithmic Loss = 0.6299, Accuracy = 0.7484662576687117
-    Iteration 8, Logarithmic Loss = 0.6258, Accuracy = 0.7484662576687117
-    Iteration 9, Logarithmic Loss = 0.6216, Accuracy = 0.7484662576687117
     Iteration 10, Logarithmic Loss = 0.6176, Accuracy = 0.7484662576687117
-    Iteration 11, Logarithmic Loss = 0.6136, Accuracy = 0.7484662576687117
-    Iteration 12, Logarithmic Loss = 0.6097, Accuracy = 0.7484662576687117
-    Iteration 13, Logarithmic Loss = 0.6058, Accuracy = 0.7484662576687117
-    Iteration 14, Logarithmic Loss = 0.6020, Accuracy = 0.7484662576687117
-    Iteration 15, Logarithmic Loss = 0.5983, Accuracy = 0.7484662576687117
-    Iteration 16, Logarithmic Loss = 0.5946, Accuracy = 0.7484662576687117
-    Iteration 17, Logarithmic Loss = 0.5909, Accuracy = 0.7484662576687117
-    Iteration 18, Logarithmic Loss = 0.5873, Accuracy = 0.7484662576687117
-    Iteration 19, Logarithmic Loss = 0.5837, Accuracy = 0.7484662576687117
     Iteration 20, Logarithmic Loss = 0.5802, Accuracy = 0.7484662576687117
-    Iteration 21, Logarithmic Loss = 0.5767, Accuracy = 0.7484662576687117
-    Iteration 22, Logarithmic Loss = 0.5733, Accuracy = 0.7484662576687117
-    Iteration 23, Logarithmic Loss = 0.5699, Accuracy = 0.7484662576687117
-    Iteration 24, Logarithmic Loss = 0.5665, Accuracy = 0.7484662576687117
-    Iteration 25, Logarithmic Loss = 0.5631, Accuracy = 0.7484662576687117
-    Iteration 26, Logarithmic Loss = 0.5598, Accuracy = 0.7484662576687117
-    Iteration 27, Logarithmic Loss = 0.5565, Accuracy = 0.7484662576687117
-    Iteration 28, Logarithmic Loss = 0.5533, Accuracy = 0.7484662576687117
-    Iteration 29, Logarithmic Loss = 0.5500, Accuracy = 0.7484662576687117
+    Iteration 30, Logarithmic Loss = 0.5468, Accuracy = 0.7484662576687117
+    Iteration 40, Logarithmic Loss = 0.5159, Accuracy = 0.7484662576687117
+    Iteration 50, Logarithmic Loss = 0.4868, Accuracy = 0.7484662576687117
+    Iteration 60, Logarithmic Loss = 0.4594, Accuracy = 0.7484662576687117
+    Iteration 70, Logarithmic Loss = 0.4336, Accuracy = 0.7484662576687117
+    Iteration 80, Logarithmic Loss = 0.4099, Accuracy = 0.7484662576687117
+    Iteration 90, Logarithmic Loss = 0.3881, Accuracy = 0.754601226993865
+    Iteration 100, Logarithmic Loss = 0.3685, Accuracy = 0.7852760736196319
+    Iteration 110, Logarithmic Loss = 0.3510, Accuracy = 0.8343558282208589
+    Iteration 120, Logarithmic Loss = 0.3354, Accuracy = 0.852760736196319
+    Iteration 130, Logarithmic Loss = 0.3216, Accuracy = 0.8650306748466258
+    Iteration 140, Logarithmic Loss = 0.3095, Accuracy = 0.8834355828220859
+    Iteration 150, Logarithmic Loss = 0.2987, Accuracy = 0.8957055214723927
+    Iteration 160, Logarithmic Loss = 0.2892, Accuracy = 0.901840490797546
+    Iteration 170, Logarithmic Loss = 0.2807, Accuracy = 0.901840490797546
+    Iteration 180, Logarithmic Loss = 0.2733, Accuracy = 0.9079754601226994
+    Iteration 190, Logarithmic Loss = 0.2666, Accuracy = 0.9079754601226994
+    Iteration 200, Logarithmic Loss = 0.2607, Accuracy = 0.9141104294478528
+    Iteration 210, Logarithmic Loss = 0.2553, Accuracy = 0.9263803680981595
+    Iteration 220, Logarithmic Loss = 0.2506, Accuracy = 0.9263803680981595
+    Iteration 230, Logarithmic Loss = 0.2463, Accuracy = 0.9263803680981595
+    Iteration 240, Logarithmic Loss = 0.2424, Accuracy = 0.9263803680981595
+    Iteration 250, Logarithmic Loss = 0.2388, Accuracy = 0.9263803680981595
+    Iteration 260, Logarithmic Loss = 0.2356, Accuracy = 0.9263803680981595
+    Iteration 270, Logarithmic Loss = 0.2327, Accuracy = 0.9263803680981595
+    Iteration 280, Logarithmic Loss = 0.2300, Accuracy = 0.9263803680981595
+    Iteration 290, Logarithmic Loss = 0.2275, Accuracy = 0.9263803680981595
+    Iteration 300, Logarithmic Loss = 0.2253, Accuracy = 0.9325153374233128
+    Iteration 310, Logarithmic Loss = 0.2232, Accuracy = 0.9325153374233128
+    Iteration 320, Logarithmic Loss = 0.2213, Accuracy = 0.9325153374233128
+    Iteration 330, Logarithmic Loss = 0.2195, Accuracy = 0.9325153374233128
+    Iteration 340, Logarithmic Loss = 0.2179, Accuracy = 0.9325153374233128
+    Iteration 350, Logarithmic Loss = 0.2164, Accuracy = 0.9325153374233128
+    Iteration 360, Logarithmic Loss = 0.2150, Accuracy = 0.9325153374233128
+    Iteration 370, Logarithmic Loss = 0.2136, Accuracy = 0.9325153374233128
+    Iteration 380, Logarithmic Loss = 0.2124, Accuracy = 0.9325153374233128
+    Iteration 390, Logarithmic Loss = 0.2113, Accuracy = 0.9325153374233128
+    Iteration 400, Logarithmic Loss = 0.2102, Accuracy = 0.9325153374233128
+    Iteration 410, Logarithmic Loss = 0.2092, Accuracy = 0.9325153374233128
+    Iteration 420, Logarithmic Loss = 0.2083, Accuracy = 0.9325153374233128
+    Iteration 430, Logarithmic Loss = 0.2074, Accuracy = 0.9325153374233128
+    Iteration 440, Logarithmic Loss = 0.2066, Accuracy = 0.9325153374233128
+    Iteration 450, Logarithmic Loss = 0.2059, Accuracy = 0.9325153374233128
+    Iteration 460, Logarithmic Loss = 0.2052, Accuracy = 0.9325153374233128
+    Iteration 470, Logarithmic Loss = 0.2045, Accuracy = 0.9325153374233128
+    Iteration 480, Logarithmic Loss = 0.2039, Accuracy = 0.9325153374233128
+    Iteration 490, Logarithmic Loss = 0.2033, Accuracy = 0.9325153374233128
     
 
 
