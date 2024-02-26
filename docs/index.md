@@ -2,7 +2,7 @@
 # Supervised Learning : Implementing Backpropagation In Updating Weights for Neural Network Classification
 
 ***
-### John Pauline Pineda <br> <br> *February 28, 2024*
+### John Pauline Pineda <br> <br> *February 27, 2024*
 ***
 
 * [**1. Table of Contents**](#TOC)
@@ -5508,11 +5508,11 @@ def forward_pass(W1, W2):
 ##################################
 def plot_loss_accuracy(loss_vals, accuracies):
     fig = plt.figure(figsize=(16, 7))
-    fig.suptitle('Log Loss and Accuracy Over Iterations')
+    fig.suptitle('Logarithmic Loss and Classification Accuracy Over Iterations')
     ax = fig.add_subplot(1, 2, 1)
     ax.plot(loss_vals)
     ax.grid(True)
-    ax.set(xlabel='Iterations', title='Logarithmic Loss')
+    ax.set(xlabel='Iterations', ylabel='Logarithmic Loss')
     ax.set_xlim(0,500)
     ax.set_ylim(0,1.0)
     ax = fig.add_subplot(1, 2, 2)
@@ -5520,7 +5520,7 @@ def plot_loss_accuracy(loss_vals, accuracies):
     ax.set_xlim(0,500)
     ax.set_ylim(0,1.0)
     ax.grid(True)
-    ax.set(xlabel='Iterations', title='Accuracy');
+    ax.set(xlabel='Iterations', ylabel='Accuracy');
 ```
 
 ### 1.6.2 Backpropagation with Very High Learning Rate and Low Epoch Count <a class="anchor" id="1.6.2"></a>
@@ -6255,10 +6255,12 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
     
 
 
+## 1.7. Consolidated Findings <a class="anchor" id="1.7"></a>
+
 # 2. Summary <a class="anchor" id="Summary"></a>
 
 
-
+![Project46_Summary.png](attachment:138628b4-5c39-4438-9840-c1861056438f.png)
 
 # 3. References <a class="anchor" id="References"></a>
 
