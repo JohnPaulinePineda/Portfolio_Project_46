@@ -5269,6 +5269,9 @@ display(cancer_rate_preprocessed_categorical_summary.sort_values(by=['ChiSquare.
 ## 1.6. Neural Network Classification Weight Update <a class="anchor" id="1.6"></a>
 
 ### 1.6.1 Premodelling Data Description <a class="anchor" id="1.6.1"></a>
+1. Among the predictor variables determined to have a statistically significant difference between the means of the numeric measurements obtained from LOW and HIGH groups of the <span style="color: #FF0000">CANRAT</span> target variable, only 2 were retained with the highest absolute t-test statistic values with reported low p-values less than the significance level of 0.05.. 
+    * <span style="color: #FF0000">GDPCAP</span>: T.Test.Statistic=-11.937, Correlation.PValue=0.000
+    * <span style="color: #FF0000">EPISCO</span>: T.Test.Statistic=-11.789, Correlation.PValue=0.000 
 
 
 ```python
@@ -5598,6 +5601,65 @@ plot_loss_accuracy(loss_vals, accuracies)
 
 ```python
 ##################################
+# Gathering the final accuracies
+# and logarithmic loss errors
+##################################
+VHLR_LEC_metrics = pd.DataFrame(["ACCURACY","LOGARITHMIC_LOSS"])
+VHLR_LEC_values = pd.DataFrame([accuracies[-1],loss_vals[-1]])
+VHLR_LEC_method = pd.DataFrame(["VeryHighLearningRate_LowEpochCount"]*2)
+VHLR_LEC_summary = pd.concat([VHLR_LEC_metrics, 
+                             VHLR_LEC_values,
+                             VHLR_LEC_method], axis=1)
+VHLR_LEC_summary.columns = ['Metric', 'Value', 'Method']
+VHLR_LEC_summary.reset_index(inplace=True, drop=True)
+display(VHLR_LEC_summary)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Metric</th>
+      <th>Value</th>
+      <th>Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ACCURACY</td>
+      <td>0.926380</td>
+      <td>VeryHighLearningRate_LowEpochCount</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.188549</td>
+      <td>VeryHighLearningRate_LowEpochCount</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+##################################
 # Plotting the predicted and
 # ground truth classes
 ##################################
@@ -5621,7 +5683,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 
     
-![png](output_175_0.png)
+![png](output_176_0.png)
     
 
 
@@ -5733,8 +5795,67 @@ plot_loss_accuracy(loss_vals, accuracies)
 
 
     
-![png](output_178_1.png)
+![png](output_179_1.png)
     
+
+
+
+```python
+##################################
+# Gathering the final accuracies
+# and logarithmic loss errors
+##################################
+VHLR_HEC_metrics = pd.DataFrame(["ACCURACY","LOGARITHMIC_LOSS"])
+VHLR_HEC_values = pd.DataFrame([accuracies[-1],loss_vals[-1]])
+VHLR_HEC_method = pd.DataFrame(["VeryHighLearningRate_HighEpochCount"]*2)
+VHLR_HEC_summary = pd.concat([VHLR_HEC_metrics, 
+                             VHLR_HEC_values,
+                             VHLR_HEC_method], axis=1)
+VHLR_HEC_summary.columns = ['Metric', 'Value', 'Method']
+VHLR_HEC_summary.reset_index(inplace=True, drop=True)
+display(VHLR_HEC_summary)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Metric</th>
+      <th>Value</th>
+      <th>Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ACCURACY</td>
+      <td>0.920245</td>
+      <td>VeryHighLearningRate_HighEpochCount</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.164608</td>
+      <td>VeryHighLearningRate_HighEpochCount</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
 
@@ -5763,7 +5884,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 
     
-![png](output_179_0.png)
+![png](output_181_0.png)
     
 
 
@@ -5835,8 +5956,67 @@ plot_loss_accuracy(loss_vals, accuracies)
 
 
     
-![png](output_182_1.png)
+![png](output_184_1.png)
     
+
+
+
+```python
+##################################
+# Gathering the final accuracies
+# and logarithmic loss errors
+##################################
+HLR_LEC_metrics = pd.DataFrame(["ACCURACY","LOGARITHMIC_LOSS"])
+HLR_LEC_values = pd.DataFrame([accuracies[-1],loss_vals[-1]])
+HLR_LEC_method = pd.DataFrame(["HighLearningRate_LowEpochCount"]*2)
+HLR_LEC_summary = pd.concat([HLR_LEC_metrics, 
+                             HLR_LEC_values,
+                             HLR_LEC_method], axis=1)
+HLR_LEC_summary.columns = ['Metric', 'Value', 'Method']
+HLR_LEC_summary.reset_index(inplace=True, drop=True)
+display(HLR_LEC_summary)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Metric</th>
+      <th>Value</th>
+      <th>Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ACCURACY</td>
+      <td>0.926380</td>
+      <td>HighLearningRate_LowEpochCount</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.193142</td>
+      <td>HighLearningRate_LowEpochCount</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
 
@@ -5865,7 +6045,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 
     
-![png](output_183_0.png)
+![png](output_186_0.png)
     
 
 
@@ -5977,8 +6157,67 @@ plot_loss_accuracy(loss_vals, accuracies)
 
 
     
-![png](output_186_1.png)
+![png](output_189_1.png)
     
+
+
+
+```python
+##################################
+# Gathering the final accuracies
+# and logarithmic loss errors
+##################################
+HLR_HEC_metrics = pd.DataFrame(["ACCURACY","LOGARITHMIC_LOSS"])
+HLR_HEC_values = pd.DataFrame([accuracies[-1],loss_vals[-1]])
+HLR_HEC_method = pd.DataFrame(["HighLearningRate_HighEpochCount"]*2)
+HLR_HEC_summary = pd.concat([HLR_HEC_metrics, 
+                             HLR_HEC_values,
+                             HLR_HEC_method], axis=1)
+HLR_HEC_summary.columns = ['Metric', 'Value', 'Method']
+HLR_HEC_summary.reset_index(inplace=True, drop=True)
+display(HLR_HEC_summary)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Metric</th>
+      <th>Value</th>
+      <th>Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ACCURACY</td>
+      <td>0.926380</td>
+      <td>HighLearningRate_HighEpochCount</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.186602</td>
+      <td>HighLearningRate_HighEpochCount</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
 
@@ -6007,7 +6246,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 
     
-![png](output_187_0.png)
+![png](output_191_0.png)
     
 
 
@@ -6079,8 +6318,67 @@ plot_loss_accuracy(loss_vals, accuracies)
 
 
     
-![png](output_190_1.png)
+![png](output_194_1.png)
     
+
+
+
+```python
+##################################
+# Gathering the final accuracies
+# and logarithmic loss errors
+##################################
+LLR_LEC_metrics = pd.DataFrame(["ACCURACY","LOGARITHMIC_LOSS"])
+LLR_LEC_values = pd.DataFrame([accuracies[-1],loss_vals[-1]])
+LLR_LEC_method = pd.DataFrame(["LowLearningRate_LowEpochCount"]*2)
+LLR_LEC_summary = pd.concat([LLR_LEC_metrics, 
+                             LLR_LEC_values,
+                             LLR_LEC_method], axis=1)
+LLR_LEC_summary.columns = ['Metric', 'Value', 'Method']
+LLR_LEC_summary.reset_index(inplace=True, drop=True)
+display(LLR_LEC_summary)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Metric</th>
+      <th>Value</th>
+      <th>Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ACCURACY</td>
+      <td>0.785276</td>
+      <td>LowLearningRate_LowEpochCount</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.370406</td>
+      <td>LowLearningRate_LowEpochCount</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
 
@@ -6109,7 +6407,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 
     
-![png](output_191_0.png)
+![png](output_196_0.png)
     
 
 
@@ -6221,8 +6519,67 @@ plot_loss_accuracy(loss_vals, accuracies)
 
 
     
-![png](output_194_1.png)
+![png](output_199_1.png)
     
+
+
+
+```python
+##################################
+# Gathering the final accuracies
+# and logarithmic loss errors
+##################################
+LLR_HEC_metrics = pd.DataFrame(["ACCURACY","LOGARITHMIC_LOSS"])
+LLR_HEC_values = pd.DataFrame([accuracies[-1],loss_vals[-1]])
+LLR_HEC_method = pd.DataFrame(["LowLearningRate_HighEpochCount"]*2)
+LLR_HEC_summary = pd.concat([LLR_HEC_metrics, 
+                             LLR_HEC_values,
+                             LLR_HEC_method], axis=1)
+LLR_HEC_summary.columns = ['Metric', 'Value', 'Method']
+LLR_HEC_summary.reset_index(inplace=True, drop=True)
+display(LLR_HEC_summary)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Metric</th>
+      <th>Value</th>
+      <th>Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ACCURACY</td>
+      <td>0.932515</td>
+      <td>LowLearningRate_HighEpochCount</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.202755</td>
+      <td>LowLearningRate_HighEpochCount</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
 
@@ -6251,11 +6608,15 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 
     
-![png](output_195_0.png)
+![png](output_201_0.png)
     
 
 
 ## 1.7. Consolidated Findings <a class="anchor" id="1.7"></a>
+
+1. The backpropagation algorithm applied with gradient descent parameter setting which demonstrated the optimal classification performance in terms of accuracy, sufficiently low logarithmic loss error and consistently smooth profile is as follows:
+    * <span style="color: #FF0000">LLR_HEC</span> = Low Learning Rate (0.001) and High Epoch Count (500)
+2. The choice of **Learning Rate** and **Epoch Count** in the implementation of backpropagation and gradient descent algorithms are critical to achieving fully optimized class prediction while maintaining minimal logarithm loss error estimates.
 
 # 2. Summary <a class="anchor" id="Summary"></a>
 
