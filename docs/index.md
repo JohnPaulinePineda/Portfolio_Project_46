@@ -6618,6 +6618,334 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
     * <span style="color: #FF0000">LLR_HEC</span> = Low Learning Rate (0.001) and High Epoch Count (500)
 2. The choice of **Learning Rate** and **Epoch Count** in the implementation of backpropagation and gradient descent algorithms are critical to achieving fully optimized class prediction while maintaining minimal logarithm loss error estimates.
 
+
+```python
+##################################
+# Consolidating all the
+# model performance metrics
+##################################
+model_performance_comparison = pd.concat([VHLR_LEC_summary, 
+                                          VHLR_HEC_summary,
+                                          HLR_LEC_summary, 
+                                          HLR_HEC_summary,
+                                          LLR_LEC_summary, 
+                                          LLR_HEC_summary], 
+                                         ignore_index=True)
+print('Neural Network Model Comparison: ')
+display(model_performance_comparison)
+```
+
+    Neural Network Model Comparison: 
+    
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Metric</th>
+      <th>Value</th>
+      <th>Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ACCURACY</td>
+      <td>0.926380</td>
+      <td>VeryHighLearningRate_LowEpochCount</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.188549</td>
+      <td>VeryHighLearningRate_LowEpochCount</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ACCURACY</td>
+      <td>0.920245</td>
+      <td>VeryHighLearningRate_HighEpochCount</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.164608</td>
+      <td>VeryHighLearningRate_HighEpochCount</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ACCURACY</td>
+      <td>0.926380</td>
+      <td>HighLearningRate_LowEpochCount</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.193142</td>
+      <td>HighLearningRate_LowEpochCount</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>ACCURACY</td>
+      <td>0.926380</td>
+      <td>HighLearningRate_HighEpochCount</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.186602</td>
+      <td>HighLearningRate_HighEpochCount</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>ACCURACY</td>
+      <td>0.785276</td>
+      <td>LowLearningRate_LowEpochCount</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.370406</td>
+      <td>LowLearningRate_LowEpochCount</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>ACCURACY</td>
+      <td>0.932515</td>
+      <td>LowLearningRate_HighEpochCount</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.202755</td>
+      <td>LowLearningRate_HighEpochCount</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+##################################
+# Consolidating the values for the
+# accuracy metrics
+# for all models
+##################################
+model_performance_comparison_accuracy = model_performance_comparison[model_performance_comparison['Metric']=='ACCURACY']
+model_performance_comparison_accuracy.reset_index(inplace=True, drop=True)
+model_performance_comparison_accuracy
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Metric</th>
+      <th>Value</th>
+      <th>Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ACCURACY</td>
+      <td>0.926380</td>
+      <td>VeryHighLearningRate_LowEpochCount</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ACCURACY</td>
+      <td>0.920245</td>
+      <td>VeryHighLearningRate_HighEpochCount</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ACCURACY</td>
+      <td>0.926380</td>
+      <td>HighLearningRate_LowEpochCount</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ACCURACY</td>
+      <td>0.926380</td>
+      <td>HighLearningRate_HighEpochCount</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ACCURACY</td>
+      <td>0.785276</td>
+      <td>LowLearningRate_LowEpochCount</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ACCURACY</td>
+      <td>0.932515</td>
+      <td>LowLearningRate_HighEpochCount</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+##################################
+# Plotting the values for the
+# accuracy metrics
+# for all models
+##################################
+fig, ax = plt.subplots(figsize=(7, 7))
+accuracy_hbar = ax.barh(model_performance_comparison_accuracy['Method'], model_performance_comparison_accuracy['Value'])
+ax.set_xlabel("Accuracy")
+ax.set_ylabel("Neural Network Classification Models")
+ax.bar_label(accuracy_hbar, fmt='%.5f', padding=-50, color='white', fontweight='bold')
+ax.set_xlim(0,1)
+plt.show()
+```
+
+
+    
+![png](output_205_0.png)
+    
+
+
+
+```python
+##################################
+# Consolidating the values for the
+# logarithmic loss error metrics
+# for all models
+##################################
+model_performance_comparison_logarithmic_loss = model_performance_comparison[model_performance_comparison['Metric']=='LOGARITHMIC_LOSS']
+model_performance_comparison_logarithmic_loss.reset_index(inplace=True, drop=True)
+model_performance_comparison_logarithmic_loss
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Metric</th>
+      <th>Value</th>
+      <th>Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.188549</td>
+      <td>VeryHighLearningRate_LowEpochCount</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.164608</td>
+      <td>VeryHighLearningRate_HighEpochCount</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.193142</td>
+      <td>HighLearningRate_LowEpochCount</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.186602</td>
+      <td>HighLearningRate_HighEpochCount</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.370406</td>
+      <td>LowLearningRate_LowEpochCount</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>LOGARITHMIC_LOSS</td>
+      <td>0.202755</td>
+      <td>LowLearningRate_HighEpochCount</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+##################################
+# Plotting the values for the
+# logarithmic loss error
+# for all models
+##################################
+fig, ax = plt.subplots(figsize=(7, 7))
+logarithmic_loss_hbar = ax.barh(model_performance_comparison_logarithmic_loss['Method'], model_performance_comparison_logarithmic_loss['Value'])
+ax.set_xlabel("Logarithmic Loss Error")
+ax.set_ylabel("Neural Network Classification Models")
+ax.bar_label(logarithmic_loss_hbar, fmt='%.5f', padding=-50, color='white', fontweight='bold')
+ax.set_xlim(0,0.40)
+plt.show()
+```
+
+
+    
+![png](output_207_0.png)
+    
+
+
 # 2. Summary <a class="anchor" id="Summary"></a>
 
 
@@ -6701,6 +7029,9 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 * **[Publication]** [Multiple Imputation of Discrete and Continuous Data by Fully Conditional Specification](https://journals.sagepub.com/doi/10.1177/0962280206074463) by Stef van Buuren (Statistical Methods in Medical Research)
 * **[Publication]** [Mathematical Contributions to the Theory of Evolution: Regression, Heredity and Panmixia](https://royalsocietypublishing.org/doi/10.1098/rsta.1896.0007) by Karl Pearson (Royal Society)
 * **[Publication]** [A New Family of Power Transformations to Improve Normality or Symmetry](https://academic.oup.com/biomet/article-abstract/87/4/954/232908?redirectedFrom=fulltext&login=false) by In-Kwon Yeo and Richard Johnson (Biometrika)
+* **[Course]** [IBM Data Analyst Professional Certificate](https://www.coursera.org/professional-certificates/ibm-data-analyst) by IBM Team (Coursera)
+* **[Course]** [IBM Data Science Professional Certificate](https://www.coursera.org/professional-certificates/ibm-data-science) by IBM Team (Coursera)
+* **[Course]** [IBM Machine Learning Professional Certificate](https://www.coursera.org/professional-certificates/ibm-machine-learning) by IBM Team (Coursera)
 
 ***
 
