@@ -2,7 +2,7 @@
 # Supervised Learning : Implementing Backpropagation In Updating Weights for Neural Network Classification
 
 ***
-### John Pauline Pineda <br> <br> *February 27, 2024*
+### [**John Pauline Pineda**](https://github.com/JohnPaulinePineda) <br> <br> *February 27, 2024*
 ***
 
 * [**1. Table of Contents**](#TOC)
@@ -131,6 +131,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import itertools
+import os
 %matplotlib inline
 
 from operator import add,mul,truediv
@@ -145,9 +146,18 @@ from scipy import stats
 
 ```python
 ##################################
-# Loading the dataset
+# Defining file paths
 ##################################
-cancer_rate = pd.read_csv('CategoricalCancerRates.csv')
+DATASETS_ORIGINAL_PATH = r"datasets\original"
+```
+
+
+```python
+##################################
+# Loading the dataset
+# from the DATASETS_ORIGINAL_PATH
+##################################
+cancer_rate = pd.read_csv(os.path.join("..", DATASETS_ORIGINAL_PATH, "CategoricalCancerRates.csv"))
 ```
 
 
@@ -819,7 +829,7 @@ cancer_rate.duplicated().sum()
 
 
 
-    0
+    np.int64(0)
 
 
 
@@ -1213,15 +1223,6 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.864407</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>GDPPER</td>
-      <td>float64</td>
-      <td>177</td>
-      <td>165</td>
-      <td>12</td>
-      <td>0.932203</td>
-    </tr>
-    <tr>
       <th>21</th>
       <td>EPISCO</td>
       <td>float64</td>
@@ -1231,13 +1232,13 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.932203</td>
     </tr>
     <tr>
-      <th>20</th>
-      <td>HDICAT</td>
-      <td>category</td>
+      <th>2</th>
+      <td>GDPPER</td>
+      <td>float64</td>
       <td>177</td>
-      <td>167</td>
-      <td>10</td>
-      <td>0.943503</td>
+      <td>165</td>
+      <td>12</td>
+      <td>0.932203</td>
     </tr>
     <tr>
       <th>16</th>
@@ -1249,8 +1250,17 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.943503</td>
     </tr>
     <tr>
-      <th>9</th>
-      <td>DTHCMD</td>
+      <th>20</th>
+      <td>HDICAT</td>
+      <td>category</td>
+      <td>177</td>
+      <td>167</td>
+      <td>10</td>
+      <td>0.943503</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>CO2EMI</td>
       <td>float64</td>
       <td>177</td>
       <td>170</td>
@@ -1267,8 +1277,17 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.960452</td>
     </tr>
     <tr>
-      <th>15</th>
-      <td>CO2EMI</td>
+      <th>11</th>
+      <td>GHGEMI</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>DTHCMD</td>
       <td>float64</td>
       <td>177</td>
       <td>170</td>
@@ -1285,15 +1304,6 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.960452</td>
     </tr>
     <tr>
-      <th>11</th>
-      <td>GHGEMI</td>
-      <td>float64</td>
-      <td>177</td>
-      <td>170</td>
-      <td>7</td>
-      <td>0.960452</td>
-    </tr>
-    <tr>
       <th>14</th>
       <td>FORARE</td>
       <td>float64</td>
@@ -1303,35 +1313,8 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.977401</td>
     </tr>
     <tr>
-      <th>8</th>
-      <td>TUBINC</td>
-      <td>float64</td>
-      <td>177</td>
-      <td>174</td>
-      <td>3</td>
-      <td>0.983051</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>AGRLND</td>
-      <td>float64</td>
-      <td>177</td>
-      <td>174</td>
-      <td>3</td>
-      <td>0.983051</td>
-    </tr>
-    <tr>
       <th>6</th>
       <td>POPGRO</td>
-      <td>float64</td>
-      <td>177</td>
-      <td>174</td>
-      <td>3</td>
-      <td>0.983051</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>POPDEN</td>
       <td>float64</td>
       <td>177</td>
       <td>174</td>
@@ -1348,8 +1331,35 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.983051</td>
     </tr>
     <tr>
+      <th>17</th>
+      <td>POPDEN</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>AGRLND</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
       <th>7</th>
       <td>LIFEXP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>TUBINC</td>
       <td>float64</td>
       <td>177</td>
       <td>174</td>
@@ -1661,13 +1671,6 @@ display(all_row_quality_summary[(all_row_quality_summary['Missing.Rate']>0.20)].
       <td>0.272727</td>
     </tr>
     <tr>
-      <th>132</th>
-      <td>Somalia</td>
-      <td>22</td>
-      <td>6</td>
-      <td>0.272727</td>
-    </tr>
-    <tr>
       <th>168</th>
       <td>South Sudan</td>
       <td>22</td>
@@ -1675,15 +1678,22 @@ display(all_row_quality_summary[(all_row_quality_summary['Missing.Rate']>0.20)].
       <td>0.272727</td>
     </tr>
     <tr>
-      <th>73</th>
-      <td>Venezuela</td>
+      <th>132</th>
+      <td>Somalia</td>
+      <td>22</td>
+      <td>6</td>
+      <td>0.272727</td>
+    </tr>
+    <tr>
+      <th>117</th>
+      <td>Libya</td>
       <td>22</td>
       <td>5</td>
       <td>0.227273</td>
     </tr>
     <tr>
-      <th>117</th>
-      <td>Libya</td>
+      <th>73</th>
+      <td>Venezuela</td>
       <td>22</td>
       <td>5</td>
       <td>0.227273</td>
@@ -1916,7 +1926,7 @@ display(numeric_column_quality_summary)
       <td>34024.900890</td>
       <td>2.346469e+05</td>
       <td>98380.636010</td>
-      <td>42154.178100</td>
+      <td>77541.764380</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -1934,7 +1944,7 @@ display(numeric_column_quality_summary)
       <td>61.701500</td>
       <td>1.000000e+02</td>
       <td>100.000000</td>
-      <td>52.516000</td>
+      <td>86.699000</td>
       <td>2</td>
       <td>1</td>
       <td>2.000000</td>
@@ -1970,7 +1980,7 @@ display(numeric_column_quality_summary)
       <td>0.873660</td>
       <td>5.354510e+00</td>
       <td>1.232440</td>
-      <td>0.962180</td>
+      <td>3.422870</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -1988,7 +1998,7 @@ display(numeric_column_quality_summary)
       <td>1.179959</td>
       <td>3.727101e+00</td>
       <td>1.235701</td>
-      <td>1.483129</td>
+      <td>2.204789</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2006,7 +2016,7 @@ display(numeric_column_quality_summary)
       <td>72.464610</td>
       <td>8.456000e+01</td>
       <td>83.200000</td>
-      <td>68.687000</td>
+      <td>82.256098</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2024,7 +2034,7 @@ display(numeric_column_quality_summary)
       <td>44.500000</td>
       <td>5.920000e+02</td>
       <td>12.000000</td>
-      <td>7.200000</td>
+      <td>4.100000</td>
       <td>4</td>
       <td>3</td>
       <td>1.333333</td>
@@ -2042,7 +2052,7 @@ display(numeric_column_quality_summary)
       <td>12.456279</td>
       <td>6.520789e+01</td>
       <td>4.941054</td>
-      <td>42.079403</td>
+      <td>4.354730</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2060,7 +2070,7 @@ display(numeric_column_quality_summary)
       <td>40.386649</td>
       <td>8.084112e+01</td>
       <td>46.252480</td>
-      <td>72.006469</td>
+      <td>38.562911</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2078,7 +2088,7 @@ display(numeric_column_quality_summary)
       <td>41009.275980</td>
       <td>1.294287e+07</td>
       <td>571903.119900</td>
-      <td>3000.932259</td>
+      <td>80158.025830</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2096,7 +2106,7 @@ display(numeric_column_quality_summary)
       <td>32.381668</td>
       <td>1.000000e+02</td>
       <td>100.000000</td>
-      <td>13.637841</td>
+      <td>80.081439</td>
       <td>3</td>
       <td>1</td>
       <td>3.000000</td>
@@ -2114,7 +2124,7 @@ display(numeric_column_quality_summary)
       <td>11118.976025</td>
       <td>1.186285e+06</td>
       <td>131484.763200</td>
-      <td>1326.034028</td>
+      <td>32241.937000</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2132,7 +2142,7 @@ display(numeric_column_quality_summary)
       <td>31.509048</td>
       <td>9.741212e+01</td>
       <td>17.421315</td>
-      <td>8.782159</td>
+      <td>37.570126</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2150,7 +2160,7 @@ display(numeric_column_quality_summary)
       <td>2.298368</td>
       <td>3.172684e+01</td>
       <td>14.772658</td>
-      <td>0.972088</td>
+      <td>6.160799</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2186,7 +2196,7 @@ display(numeric_column_quality_summary)
       <td>77.983133</td>
       <td>7.918951e+03</td>
       <td>3.335312</td>
-      <td>13.300785</td>
+      <td>19.331586</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2204,7 +2214,7 @@ display(numeric_column_quality_summary)
       <td>53.392460</td>
       <td>1.433107e+02</td>
       <td>110.139221</td>
-      <td>45.220661</td>
+      <td>75.734833</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2222,7 +2232,7 @@ display(numeric_column_quality_summary)
       <td>5348.192875</td>
       <td>1.173705e+05</td>
       <td>51722.069000</td>
-      <td>3961.726633</td>
+      <td>41760.594780</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2426,7 +2436,7 @@ display(numeric_column_quality_summary[(numeric_column_quality_summary['Skewness
       <td>77.983133</td>
       <td>7.918951e+03</td>
       <td>3.335312</td>
-      <td>13.300785</td>
+      <td>19.331586</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2444,7 +2454,7 @@ display(numeric_column_quality_summary[(numeric_column_quality_summary['Skewness
       <td>41009.275980</td>
       <td>1.294287e+07</td>
       <td>571903.119900</td>
-      <td>3000.932259</td>
+      <td>80158.025830</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2480,7 +2490,7 @@ display(numeric_column_quality_summary[(numeric_column_quality_summary['Skewness
       <td>11118.976025</td>
       <td>1.186285e+06</td>
       <td>131484.763200</td>
-      <td>1326.034028</td>
+      <td>32241.937000</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2652,7 +2662,7 @@ display(object_column_quality_summary)
       <th>0</th>
       <td>COUNTRY</td>
       <td>Australia</td>
-      <td>Mauritius</td>
+      <td>New Zealand</td>
       <td>1</td>
       <td>1</td>
       <td>1.0</td>
@@ -3594,7 +3604,7 @@ cancer_rate_cleaned_categorical = cancer_rate_cleaned.select_dtypes(include='cat
 # for categorical columns with
 # the most frequent category
 ##################################
-cancer_rate_cleaned_categorical['HDICAT'].fillna(cancer_rate_cleaned_categorical['HDICAT'].mode()[0], inplace=True)
+cancer_rate_cleaned_categorical['HDICAT'] = cancer_rate_cleaned_categorical['HDICAT'].fillna(cancer_rate_cleaned_categorical['HDICAT'].mode()[0])
 cancer_rate_imputed_categorical = cancer_rate_cleaned_categorical.reset_index(drop=True)
 ```
 
@@ -4121,91 +4131,91 @@ for column in cancer_rate_imputed_numeric:
 
 
     
-![png](output_121_0.png)
+![png](output_122_0.png)
     
 
 
 
     
-![png](output_121_1.png)
+![png](output_122_1.png)
     
 
 
 
     
-![png](output_121_2.png)
+![png](output_122_2.png)
     
 
 
 
     
-![png](output_121_3.png)
+![png](output_122_3.png)
     
 
 
 
     
-![png](output_121_4.png)
+![png](output_122_4.png)
     
 
 
 
     
-![png](output_121_5.png)
+![png](output_122_5.png)
     
 
 
 
     
-![png](output_121_6.png)
+![png](output_122_6.png)
     
 
 
 
     
-![png](output_121_7.png)
+![png](output_122_7.png)
     
 
 
 
     
-![png](output_121_8.png)
+![png](output_122_8.png)
     
 
 
 
     
-![png](output_121_9.png)
+![png](output_122_9.png)
     
 
 
 
     
-![png](output_121_10.png)
+![png](output_122_10.png)
     
 
 
 
     
-![png](output_121_11.png)
+![png](output_122_11.png)
     
 
 
 
     
-![png](output_121_12.png)
+![png](output_122_12.png)
     
 
 
 
     
-![png](output_121_13.png)
+![png](output_122_13.png)
     
 
 
 
     
-![png](output_121_14.png)
+![png](output_122_14.png)
     
 
 
@@ -4437,7 +4447,7 @@ plt.show()
 
 
     
-![png](output_126_0.png)
+![png](output_127_0.png)
     
 
 
@@ -4474,7 +4484,7 @@ plot_correlation_matrix(cancer_rate_imputed_numeric_correlation,mask)
 
 
     
-![png](output_128_0.png)
+![png](output_129_0.png)
     
 
 
@@ -4571,79 +4581,79 @@ for column in cancer_rate_transformed_numeric:
 
 
     
-![png](output_134_0.png)
+![png](output_135_0.png)
     
 
 
 
     
-![png](output_134_1.png)
+![png](output_135_1.png)
     
 
 
 
     
-![png](output_134_2.png)
+![png](output_135_2.png)
     
 
 
 
     
-![png](output_134_3.png)
+![png](output_135_3.png)
     
 
 
 
     
-![png](output_134_4.png)
+![png](output_135_4.png)
     
 
 
 
     
-![png](output_134_5.png)
+![png](output_135_5.png)
     
 
 
 
     
-![png](output_134_6.png)
+![png](output_135_6.png)
     
 
 
 
     
-![png](output_134_7.png)
+![png](output_135_7.png)
     
 
 
 
     
-![png](output_134_8.png)
+![png](output_135_8.png)
     
 
 
 
     
-![png](output_134_9.png)
+![png](output_135_9.png)
     
 
 
 
     
-![png](output_134_10.png)
+![png](output_135_10.png)
     
 
 
 
     
-![png](output_134_11.png)
+![png](output_135_11.png)
     
 
 
 
     
-![png](output_134_12.png)
+![png](output_135_12.png)
     
 
 
@@ -4733,73 +4743,73 @@ for column in cancer_rate_scaled_numeric:
 
 
     
-![png](output_140_0.png)
+![png](output_141_0.png)
     
 
 
 
     
-![png](output_140_1.png)
+![png](output_141_1.png)
     
 
 
 
     
-![png](output_140_2.png)
+![png](output_141_2.png)
     
 
 
 
     
-![png](output_140_3.png)
+![png](output_141_3.png)
     
 
 
 
     
-![png](output_140_4.png)
+![png](output_141_4.png)
     
 
 
 
     
-![png](output_140_5.png)
+![png](output_141_5.png)
     
 
 
 
     
-![png](output_140_6.png)
+![png](output_141_6.png)
     
 
 
 
     
-![png](output_140_7.png)
+![png](output_141_7.png)
     
 
 
 
     
-![png](output_140_8.png)
+![png](output_141_8.png)
     
 
 
 
     
-![png](output_140_9.png)
+![png](output_141_9.png)
     
 
 
 
     
-![png](output_140_10.png)
+![png](output_141_10.png)
     
 
 
 
     
-![png](output_140_11.png)
+![png](output_141_11.png)
     
 
 
@@ -4962,7 +4972,7 @@ axes = axes.ravel()
 ##################################
 for i, x_variable in enumerate(x_variables):
     ax = axes[i]
-    ax.boxplot([group[x_variable] for name, group in cancer_rate_preprocessed_combined.groupby(y_variable)])
+    ax.boxplot([group[x_variable] for name, group in cancer_rate_preprocessed_combined.groupby(y_variable, observed=True)])
     ax.set_title(f'{y_variable} Versus {x_variable}')
     ax.set_xlabel(y_variable)
     ax.set_ylabel(x_variable)
@@ -4981,7 +4991,7 @@ plt.show()
 
 
     
-![png](output_152_0.png)
+![png](output_153_0.png)
     
 
 
@@ -5018,7 +5028,7 @@ axes = axes.ravel()
 ##################################
 for i, y_variable in enumerate(y_variables):
     ax = axes[i]
-    category_counts = cancer_rate_preprocessed_categorical_combined.groupby([x_variable, y_variable]).size().unstack(fill_value=0)
+    category_counts = cancer_rate_preprocessed_categorical_combined.groupby([x_variable, y_variable], observed=True).size().unstack(fill_value=0)
     category_proportions = category_counts.div(category_counts.sum(axis=1), axis=0)
     category_proportions.plot(kind='bar', stacked=True, ax=ax)
     ax.set_title(f'{x_variable} Versus {y_variable}')
@@ -5038,7 +5048,7 @@ plt.show()
 
 
     
-![png](output_153_0.png)
+![png](output_154_0.png)
     
 
 
@@ -5434,7 +5444,7 @@ ax.legend(loc='upper left',title='CANRAT');
 
 
     
-![png](output_166_0.png)
+![png](output_167_0.png)
     
 
 
@@ -5594,7 +5604,7 @@ plot_loss_accuracy(loss_vals, accuracies)
 
 
     
-![png](output_174_1.png)
+![png](output_175_1.png)
     
 
 
@@ -5683,7 +5693,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 
     
-![png](output_176_0.png)
+![png](output_177_0.png)
     
 
 
@@ -5795,7 +5805,7 @@ plot_loss_accuracy(loss_vals, accuracies)
 
 
     
-![png](output_179_1.png)
+![png](output_180_1.png)
     
 
 
@@ -5884,7 +5894,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 
     
-![png](output_181_0.png)
+![png](output_182_0.png)
     
 
 
@@ -5956,7 +5966,7 @@ plot_loss_accuracy(loss_vals, accuracies)
 
 
     
-![png](output_184_1.png)
+![png](output_185_1.png)
     
 
 
@@ -6045,7 +6055,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 
     
-![png](output_186_0.png)
+![png](output_187_0.png)
     
 
 
@@ -6157,7 +6167,7 @@ plot_loss_accuracy(loss_vals, accuracies)
 
 
     
-![png](output_189_1.png)
+![png](output_190_1.png)
     
 
 
@@ -6246,7 +6256,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 
     
-![png](output_191_0.png)
+![png](output_192_0.png)
     
 
 
@@ -6318,7 +6328,7 @@ plot_loss_accuracy(loss_vals, accuracies)
 
 
     
-![png](output_194_1.png)
+![png](output_195_1.png)
     
 
 
@@ -6407,7 +6417,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 
     
-![png](output_196_0.png)
+![png](output_197_0.png)
     
 
 
@@ -6519,7 +6529,7 @@ plot_loss_accuracy(loss_vals, accuracies)
 
 
     
-![png](output_199_1.png)
+![png](output_200_1.png)
     
 
 
@@ -6608,7 +6618,7 @@ ax.legend(loc='upper left',title='Ground Truth Versus Predicted Classes');
 
 
     
-![png](output_201_0.png)
+![png](output_202_0.png)
     
 
 
@@ -6839,7 +6849,7 @@ plt.show()
 
 
     
-![png](output_205_0.png)
+![png](output_206_0.png)
     
 
 
@@ -6942,14 +6952,14 @@ plt.show()
 
 
     
-![png](output_207_0.png)
+![png](output_208_0.png)
     
 
 
 # 2. Summary <a class="anchor" id="Summary"></a>
 
 
-![Project46_Summary.png](attachment:138628b4-5c39-4438-9840-c1861056438f.png)
+![Project46_Summary.png](1204aa95-c6ed-49ab-8128-89406bbc03b2.png)
 
 # 3. References <a class="anchor" id="References"></a>
 
